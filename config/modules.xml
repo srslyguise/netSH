@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Modules[
+
+<!ELEMENT Modules (Module+)>
+<!ELEMENT Module (#PCDATA)>
+
+<!ATTLIST Module
+	src CDATA #REQUIRED
+>
+]>
+
+
+<Modules>
+	<Module src="modules/module.js"/>
+	<Module src="modules/base/base.js"/>
+</Modules>

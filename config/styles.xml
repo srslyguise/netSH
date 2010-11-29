@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Styles[
+
+<!ELEMENT Styles (Style+)>
+<!ELEMENT Style (#PCDATA)>
+
+<!ATTLIST Style
+	src CDATA #REQUIRED
+>
+]>
+
+
+<Styles>
+	<Style src="styles/main.css"/>
+</Styles>
