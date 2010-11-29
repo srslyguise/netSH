@@ -11,6 +11,6 @@
 
 
 <Modules>
-	<Module src="modules/module.js"/>
 	<Module src="modules/base/base.js"/>
+	<Module src="modules/fs/fs.js"/>
 </Modules>
