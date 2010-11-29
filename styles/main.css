@@ -1,0 +1,23 @@
+.text{
+	color: white;
+	font-family: Times New Roman;
+	font-size: 10pt;
+	font-weight: normal;
+	word-wrap: break-word;
+}
+
+.prompt{
+	color: white;
+	font-family: Times New Roman;
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+.shell{
+	border: 0px;
+	color: white;
+	background-color: transparent;
+	font-family: Times New Roman;
+	font-weight: normal;
+	height: 10pt;
+}
