@@ -20,7 +20,10 @@ this.help = function(argc, argv)
 	var name = "";
 
 	if(argc < 2)
+	{
+		write("usage: " + argv[0] + " &lt;cmd&gt;<br>");
 		return;
+	}
 
 	for(i = 0; i < help_xml.getElementsByTagName('Cmd').length; i++)
 		if((name = help_xml.getElementsByTagName('Cmd')[i].getAttribute('name')) == argv[1])
