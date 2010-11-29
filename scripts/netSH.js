@@ -11,7 +11,7 @@ function netSH(obj_name, base_element)
 		modules = new Array();
 
 		prompt_.setAttribute("class", "prompt");
-		prompt_.innerHTML = "root:/ #_ ";
+		prompt_.innerHTML = "netSH ";
 		input.setAttribute("class", "shell");
 		input.type = "text";
 		input.setAttribute("onkeydown", obj_name + ".handler(event.keyCode)");
