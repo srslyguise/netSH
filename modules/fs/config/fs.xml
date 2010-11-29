@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Fs[
+
+<!ELEMENT Directory (Directory, File, Link)>
+<!ELEMENT File (#PCDATA)>
+<!ELEMENT Link (#PCDATA)>
+
+<!ATTLIST Directory
+	name CDATA #REQUIRED
+>
+
+<!ATTLIST File
+	name CDATA #REQUIRED
+	src CDATA #REQUIRED
+>
+
+<!ATTLIST Link
+	name CDATA #REQUIRED
+	href CDATA #REQUIRED
+>
+]>
+
+
+<Fs>
+	<Directory name="test">
+		<File name="lol" src="lmao"/>
+	</Directory>
+</Fs>
