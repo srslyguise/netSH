@@ -51,11 +51,11 @@ function netSH(obj_name, base_element)
 			var cmd = text.match(/[(\x00-\x19)(\x21-\xFF)]+/);
 			var argv = text.split(" ");
 
-			for(i_123 = 0; i_123 < modules.length; i_123++)
-				for(y_123 = 0; y_123 < modules[i_123].functionList.length; y_123++)
-					if(modules[i_123].functionList[y_123] == cmd)
+			for(var i = 0; i < modules.length; i++)
+				for(var y = 0; y < modules[i].functionList.length; y++)
+					if(modules[i].functionList[y] == cmd)
 					{
-						eval('modules[i_123].' + cmd + '(argv.length, argv)');
+						eval('modules[i].' + cmd + '(argv.length, argv)');
 						return;
 					}
 		}
