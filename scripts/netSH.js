@@ -79,7 +79,7 @@ function netSH(obj_name, base_element)
 
 	function Write(text)
 	{
-		base_element.innerHTML += "<a class=\"text\">" + text;
+		base_element.innerHTML += "<a class=\"text\">" + text + "</a>";
 	}
 
 	this.write = function(text)
