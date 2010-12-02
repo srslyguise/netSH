@@ -2,12 +2,17 @@ this.functionList = new Array("clear", "help");
 this.name = null;
 
 var help_xml;
+var base_xml;
 var object;
+var user = null;
 
 this.init = function(obj)
 {
 	object = obj;
 	help_xml = loadXML("modules/base/config/help.xml");
+	base_xml = loadXML("modules/base/config/base.xml");
+
+	user = base_xml.documentElement.getElementsByTagName('User')[0].getAttribute('name');
 }
 
 this.clear = function(argc, argv)
@@ -54,6 +59,16 @@ this.help = function(argc, argv)
 		}
 
 	write("help: " + argv[1] + ": command not found<br>");
+}
+
+this.getUser = function()
+{
+	return user;
+}
+
+this.getPrivilege = function()
+{
+	return (base_xml.documentElement.getElementsByTagName('User')[0].getAttribute('root') == "true") ? "#" : "$";
 }
 
 function write(text)
