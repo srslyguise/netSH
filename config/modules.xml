@@ -5,12 +5,13 @@
 <!ELEMENT Module (#PCDATA)>
 
 <!ATTLIST Module
+	name CDATA #REQUIRED
 	src CDATA #REQUIRED
 >
 ]>
 
 
 <Modules>
-	<Module src="modules/base/base.js"/>
-	<Module src="modules/fs/fs.js"/>
+	<Module name="base" src="modules/base/base.js"/>
+	<Module name="fs" src="modules/fs/fs.js"/>
 </Modules>
