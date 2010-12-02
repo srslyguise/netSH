@@ -1,4 +1,6 @@
 this.functionList = new Array("cd", "ls");
+this.name = null;
+
 var object;
 var fs = null;
 var path = "/";
