@@ -29,7 +29,7 @@
 
 	<Directory name="test2">
 		<Directory name="subtest2">
-			<File name="lmao" src="lulz"/>
+			<File name="testfile" src="res/testfile"/>
 		</Directory>
 	</Directory>
 </Fs>
