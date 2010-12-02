@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Base[
+
+<!ELEMENT Base (User)>
+<!ELEMENT User (#PCDATA)>
+
+<!ATTLIST User
+	name CDATA #REQUIRED
+	root CDATA #REQUIRED
+>
+]>
+
+<Base>
+	<User name="root" root="true"/>
+</Base>
