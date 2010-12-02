@@ -19,8 +19,8 @@ function netSH(obj_name, base_element)
 		base_element.appendChild(prompt_);
 		base_element.appendChild(input);
 
-		initModules();
 		initStyles();
+		initModules();
 
 		input.focus();
 	}
