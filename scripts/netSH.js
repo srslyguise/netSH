@@ -148,6 +148,7 @@ function netSH(obj_name, base_element)
 			modules[i] = new script();
 
 			modules[i].init(obj_name);
+			modules[i].name = modules_xml.getElementsByTagName('Module')[i].getAttribute('name');
 		}
 	}
 
@@ -157,5 +158,14 @@ function netSH(obj_name, base_element)
 
 		for(i = 0; i < styles_xml.getElementsByTagName('Style').length; i++)
 			addStyle(styles_xml.getElementsByTagName('Style')[i].getAttribute('src'));
+	}
+
+	this.getModuleByName = function(name)
+	{
+		for(var i = 0; i < modules.length; i++)
+			if(modules[i].name == name)
+				return modules[i];
+
+		return null;
 	}
 }
