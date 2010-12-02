@@ -14,7 +14,7 @@ this.init = function(obj)
 	fs = fs.documentElement;
 
 	current = base_path = createTree("/", fs);
-	setPrompt("root:" + base_path.Name + " $_");
+	setPrompt(getUser() + ":" + base_path.Name + " " + getPrivilege() + "_");
 }
 
 this.cd = function(argc, argv)
@@ -70,7 +70,7 @@ function Cd(path)
 			if(Cd(tmp) == 2)
 			{
 				write("cd: " + path + ": Path not found<br>");
-				setPrompt("root:" + current.Name + " $_");
+				setPrompt(getUser() + ":" + current.Name + " " + getPrivilege() + "_");
 			}
 
 			return;
@@ -81,7 +81,7 @@ function Cd(path)
 		}
 	}
 
-	setPrompt("root:" + current.Name + " $_");
+	setPrompt(getUser() + ":" + current.Name + " " + getPrivilege() + "_");
 
 	return;
 }
@@ -159,13 +159,13 @@ function Ls(tmp_path, path)
 function showPath(path)
 {
 	for(var i = 0; i < path.subdirs.length; i++)
-		write(path.subdirs[i].Name + "<br>");
+		write('<a class=dir>' + path.subdirs[i].Name + '</a><br>');
 
 	for(var i = 0; i < path.files.length; i++)
-		write(path.files[i].Name + "<br>");
+		write("<a class=file>" + path.files[i].Name + "</a><br>");
 
 	for(var i = 0; i < path.links.length; i++)
-		write(path.links[i].Name + "<br>");
+		write("<a class=link>" + path.links[i].Name + "</a><br>");
 }
 
 function setPrompt(str)
@@ -225,4 +225,18 @@ function createTree(name, fs_)
 	}
 	
 	return node;
+}
+
+function getUser()
+{
+	var base_module = eval(object + '.getModuleByName("base");');
+
+	return base_module.getUser();
+}
+
+function getPrivilege()
+{
+	var base_module = eval(object + '.getModuleByName("base");');
+
+	return base_module.getPrivilege();
 }
