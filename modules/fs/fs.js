@@ -59,12 +59,18 @@ function Cd(path)
 			}
 
 		if(found == false)
-			return;
+			return 2;
 
 		try
 		{
 			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
-			Cd(tmp);
+
+			if(Cd(tmp) == 2)
+			{
+				write("cd: " + path + ": Path not found<br>");
+				setPrompt("root:" + current.Name + " $_");
+			}
+
 			return;
 		}
 		catch(e)
@@ -124,12 +130,18 @@ function Ls(tmp_path, path)
 			}
 
 		if(found == false)
-			return;
+		{
+			//write("ls: " + path + ": Path not found<br>")
+			return 2;
+		}
 
 		try
 		{
 			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
-			Ls(tmp_path, tmp);
+
+			if(Ls(tmp_path, tmp) == 2)
+				write("ls: " + path + ": Path not found<br>")
+
 			return;
 		}
 		catch(e)
