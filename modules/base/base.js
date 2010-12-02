@@ -1,4 +1,6 @@
 this.functionList = new Array("clear", "help");
+this.name = null;
+
 var help_xml;
 var object;
 
