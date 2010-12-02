@@ -156,6 +156,75 @@ function Ls(tmp_path, path)
 	return;
 }
 
+this.getFileSrc = function(file)
+{
+	return GetFileSrc(current, file);
+}
+
+function GetFileSrc(tmp_path, path)
+{
+	var tmp = "";
+	var found = false;
+
+	if(path[0] != "/")
+		tmp = "/";
+
+	tmp += path;
+
+	//alert(tmp);
+
+	while(tmp != null)
+	{
+		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
+		//alert("length --> " + tmp_path.subdirs.length);
+
+		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == "..")
+		{
+			if(tmp_path.prev != null)
+				tmp_path = tmp_path.prev;
+			
+			found = true;
+		}
+
+		for(var i = 0; i < tmp_path.files.length; i++)
+			if(tmp.match(/[^\/]?[\w\n]+[^\/]?/) == tmp_path.files[i].Name)
+				return tmp_path.files[i].Src;
+
+		for(var i = 0; (i < tmp_path.subdirs.length) && (found != true); i++)
+			if(tmp.match(/[^\/]?[\w\n]+[^\/]?/) == tmp_path.subdirs[i].Name)
+			{
+				found = true;
+				tmp_path = tmp_path.subdirs[i];
+			}
+
+		if(found == false)
+		{
+			return 2;
+		}
+		try
+		{
+			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
+
+			var ret = GetFileSrc(tmp_path, tmp);
+			//alert(ret);
+
+			if(ret == 2)
+				return null;
+			else
+				return ret;
+
+			return;
+		}
+		catch(e)
+		{
+			tmp = null;
+			return null;
+		}
+	}
+
+	return;
+}
+
 function showPath(path)
 {
 	for(var i = 0; i < path.subdirs.length; i++)
