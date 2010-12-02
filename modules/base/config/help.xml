@@ -13,8 +13,18 @@
 
 
 <Help>
+	<Cmd name="ls">
+		<Parameters><![CDATA[[directory]]]></Parameters>
+		<Description><![CDATA[list directory contents]]></Description>
+	</Cmd>
+
+	<Cmd name="cd">
+		<Parameters><![CDATA[&lt;dirname&gt;]]></Parameters>
+		<Description><![CDATA[Change working directory]]></Description>
+	</Cmd>
+
 	<Cmd name="clear">
 		<Parameters></Parameters>
-		<Description>Clear the screen</Description>
+		<Description><![CDATA[Clear the screen]]></Description>
 	</Cmd>
 </Help>
