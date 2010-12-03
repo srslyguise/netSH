@@ -1,3 +1,5 @@
+var netSH_prefix = "/";
+
 function netSH(obj_name, base_element)
 {
 	var prompt_;
@@ -79,12 +81,17 @@ function netSH(obj_name, base_element)
 
 	function Write(text)
 	{
-		base_element.innerHTML += "<a class=\"text\">" + text + "</a>";
+		base_element.innerHTML += "<a class=text>" + text + "</a>";
 	}
 
 	this.write = function(text)
 	{
 		Write(text);
+	}
+
+	this.writeFile = function(file)
+	{
+		base_element.innerHTML += "<pre class=text>" + file + "</pre>";
 	}
 
 	function loadXML(file)
@@ -134,27 +141,37 @@ function netSH(obj_name, base_element)
 		addStyle(src);
 	}
 
+	function addModule(name, file)
+	{
+		var script = null;
+
+		script = new Function(file);
+		modules.push(new script());
+		modules[modules.length - 1].init(obj_name);
+		modules[modules.length - 1].name = name;
+	}
+
+	this.addModule_pub = function(name, file)
+	{
+		addModule(name, file);
+	}
+
 	function initModules()
 	{
-		var modules_xml = loadXML("config/modules.xml");
+		var modules_xml = loadXML(netSH_prefix + "config/modules.xml");
 
 		for(i = 0; i < modules_xml.getElementsByTagName('Module').length; i++)
 		{
 			var file = "";
-			var script = null;
 
-			file = loadFILE(modules_xml.getElementsByTagName('Module')[i].getAttribute('src'));
-			script = new Function(file);
-			modules[i] = new script();
-
-			modules[i].init(obj_name);
-			modules[i].name = modules_xml.getElementsByTagName('Module')[i].getAttribute('name');
+			file = loadFILE(netSH_prefix + modules_xml.getElementsByTagName('Module')[i].getAttribute('src'));
+			addModule(modules_xml.getElementsByTagName('Module')[i].getAttribute('name'), file);
 		}
 	}
 
 	function initStyles()
 	{
-		var styles_xml = loadXML("config/styles.xml");
+		var styles_xml = loadXML(netSH_prefix + "config/styles.xml");
 
 		for(i = 0; i < styles_xml.getElementsByTagName('Style').length; i++)
 			addStyle(styles_xml.getElementsByTagName('Style')[i].getAttribute('src'));
