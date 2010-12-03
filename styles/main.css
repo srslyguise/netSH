@@ -1,5 +1,5 @@
 .text{
-	color:	#AA0000;
+	color:	#FFFFFF;
 	font-family: Times New Roman;
 	font-size: 10pt;
 	font-weight: normal;
@@ -7,7 +7,7 @@
 }
 
 .prompt{
-	color:	#AA0000;
+	color:	#FFFFFF;
 	font-family: Times New Roman;
 	font-size: 10pt;
 	font-weight: normal;
@@ -15,7 +15,7 @@
 
 .shell{
 	border: 0px;
-	color:	#AA0000;
+	color:	#FFFFFF;
 	background-color: transparent;
 	font-family: Times New Roman;
 	font-weight: normal;
