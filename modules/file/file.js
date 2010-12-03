@@ -2,10 +2,18 @@ this.functionList = new Array("cat");
 this.name = null;
 
 var object;
+var sh_module;
+var file_xml = null;
 
 this.init = function(obj)
 {
 	object = obj;
+	file_xml = loadXML(netSH_prefix + "modules/file/config/file.xml");
+
+	if(file_xml.documentElement.getAttribute("sh") == "true")
+		sh_module = eval(object + '.getModuleByName("sh");');
+	else
+		sh_module = null;
 }
 
 this.cat = function(argc, argv)
@@ -26,11 +34,14 @@ this.cat = function(argc, argv)
 		write("cat: " + argv[1] + ": File not found<br>");
 	else
 	{
-		file = loadFILE(src);
+		file = loadFILE(netSH_prefix + src);
 		file = file.replace(/</g, "&lt;");
 		file = file.replace(/>/g, "&gt;");
 
-		write("<pre>" + file + "</pre>");
+		if(sh_module != null)
+			file = sh_module.highlight(file, getExtension(src));
+
+		writeFile(file);
 	}
 }
 
@@ -39,7 +50,22 @@ function loadFILE(file)
 	return eval(object + '.loadFILE_pub("' + file + '");');
 }
 
+function loadXML(file)
+{
+	return eval(object + '.loadXML_pub("' + file + '");');
+}
+
 function write(text)
 {
 	eval(object + '.write(text);');
+}
+
+function writeFile(file)
+{
+	eval(object + '.writeFile(file);');
+}
+
+function getExtension(file)
+{
+	return file.match(/\.(.*)?$/)[1];
 }
