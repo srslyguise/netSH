@@ -29,7 +29,7 @@
 
 	<Directory name="test2">
 		<Directory name="subtest2">
-			<File name="testfile" src="res/testfile"/>
+			<File name="testfile.c" src="res/testfile.c"/>
 		</Directory>
 	</Directory>
 </Fs>
