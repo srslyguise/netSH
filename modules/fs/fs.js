@@ -10,7 +10,7 @@ var current;
 this.init = function(obj)
 {
 	object = obj;
-	fs = loadXML("modules/fs/config/fs.xml");
+	fs = loadXML(netSH_prefix + "modules/fs/config/fs.xml");
 	fs = fs.documentElement;
 
 	current = base_path = createTree("/", fs);
@@ -54,7 +54,7 @@ function Cd(path)
 		}
 
 		for(var i = 0; (i < current.subdirs.length) && (found != true); i++)
-			if(tmp.match(/[^\/]?[\w\n]+[^\/]?/) == current.subdirs[i].Name)
+			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == current.subdirs[i].Name)
 			{
 				found = true;
 				current = current.subdirs[i];
@@ -125,7 +125,7 @@ function Ls(tmp_path, path)
 		}
 
 		for(var i = 0; (i < tmp_path.subdirs.length) && (found != true); i++)
-			if(tmp.match(/[^\/]?[\w\n]+[^\/]?/) == tmp_path.subdirs[i].Name)
+			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.subdirs[i].Name)
 			{
 				found = true;
 				tmp_path = tmp_path.subdirs[i];
@@ -187,11 +187,11 @@ function GetFileSrc(tmp_path, path)
 		}
 
 		for(var i = 0; i < tmp_path.files.length; i++)
-			if(tmp.match(/[^\/]?[\w\n]+[^\/]?/) == tmp_path.files[i].Name)
+			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.files[i].Name)
 				return tmp_path.files[i].Src;
 
 		for(var i = 0; (i < tmp_path.subdirs.length) && (found != true); i++)
-			if(tmp.match(/[^\/]?[\w\n]+[^\/]?/) == tmp_path.subdirs[i].Name)
+			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.subdirs[i].Name)
 			{
 				found = true;
 				tmp_path = tmp_path.subdirs[i];
