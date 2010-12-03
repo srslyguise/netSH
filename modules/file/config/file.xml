@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE File[
+
+<!ELEMENT File (#PCDATA)>
+
+<!ATTLIST File
+	sh CDATA #REQUIRED
+>
+]>
+
+<File sh="true" />
