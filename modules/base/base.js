@@ -9,8 +9,8 @@ var user = null;
 this.init = function(obj)
 {
 	object = obj;
-	help_xml = loadXML("modules/base/config/help.xml");
-	base_xml = loadXML("modules/base/config/base.xml");
+	help_xml = loadXML(netSH_prefix + "modules/base/config/help.xml");
+	base_xml = loadXML(netSH_prefix + "modules/base/config/base.xml");
 
 	user = base_xml.documentElement.getElementsByTagName('User')[0].getAttribute('name');
 }
