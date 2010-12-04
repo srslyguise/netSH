@@ -5,6 +5,9 @@ var help_xml;
 var base_xml;
 var object;
 var user = null;
+var input = null;
+var history = new Array();
+var history_pos = 0;
 
 this.init = function(obj)
 {
@@ -13,6 +16,8 @@ this.init = function(obj)
 	base_xml = loadXML(netSH_prefix + "modules/base/config/base.xml");
 
 	user = base_xml.documentElement.getElementsByTagName('User')[0].getAttribute('name');
+	input = eval(object + '.getInput();');
+	updateInput("handler", "event.keyCode");
 }
 
 this.clear = function(argc, argv)
@@ -61,6 +66,32 @@ this.help = function(argc, argv)
 	write("help: " + argv[1] + ": command not found<br>");
 }
 
+this.handler = function(e)
+{
+	if((e == 13) && (input.value != ""))
+	{
+		history.push(input.value);
+		history_pos = 0;
+	}
+
+	if((e == 38) && (history.length != 0))
+	{
+		if((history[history.length - (++history_pos)]) != undefined)
+			input.value = history[history.length - (history_pos)];
+		else
+			--history_pos;
+	}
+
+	if((e == 40) && (history.length != 0))
+	{
+		if((history[history.length - (--history_pos)]) != undefined)
+			input.value = history[history.length - (history_pos)];
+		else
+			++history_pos;
+	}
+
+}
+
 this.getUser = function()
 {
 	return user;
@@ -79,4 +110,10 @@ function write(text)
 function loadXML(file)
 {
 	return eval(object + '.loadXML_pub("' + file + '");');
+}
+
+function updateInput(func, params)
+{
+	var old = input.getAttribute("onkeydown");
+	input.setAttribute("onkeydown", object + ".getModuleByName(\"base\")." + func + "(" + params + "); " + old);
 }
