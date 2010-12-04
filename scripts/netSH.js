@@ -29,8 +29,6 @@ function netSH(obj_name, base_element)
 	
 	this.handler = function(kc)
 	{
-		var cmd;
-
 		if((kc == 13) && (input.value != ""))
 		{
 			base_element.removeChild(input);
@@ -42,8 +40,6 @@ function netSH(obj_name, base_element)
 			base_element.appendChild(input);
 			input.focus();
 		}
-
-
 	}
 
 	function parse(text)
@@ -68,6 +64,11 @@ function netSH(obj_name, base_element)
 	this.setPrompt = function(p)
 	{
 		prompt_.innerHTML = p;
+	}
+
+	this.getInput = function()
+	{
+		return input;
 	}
 
 	this.clear = function()
