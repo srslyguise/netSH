@@ -101,6 +101,9 @@ function netSH(obj_name, base_element)
 		request.open("GET", file += (file.match(/\?/) == null ? "?" : "&") + (new Date()).getTime(), false);
 		request.send(null);
 
+		if(request.status == 404)
+			return null;
+
 		return request.responseXML;
 	}
 
@@ -115,6 +118,9 @@ function netSH(obj_name, base_element)
 
 		request.open("GET", file += (file.match(/\?/) == null ? "?" : "&") + (new Date()).getTime(), false);
 		request.send(null);
+
+		if(request.status == 404)
+			return null;
 
 		return request.responseText;
 	}
