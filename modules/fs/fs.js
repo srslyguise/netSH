@@ -240,7 +240,7 @@ function showPath(path)
 		write("<a class=file>" + path.files[i].Name + "</a><br>");
 
 	for(var i = 0; i < path.links.length; i++)
-		write("<a class=link>" + path.links[i].Name + "</a><a class=text> -&gt; " + path.links[i].Href + "</a><br>");
+		write("<a class=link>" + path.links[i].Name + "</a><a class=text> -&gt; <a href=\"" + path.links[i].Href + "\">" + path.links[i].Href + "</a></a><br>");
 }
 
 function setPrompt(str)
@@ -255,7 +255,7 @@ function loadXML(file)
 
 function write(text)
 {
-	eval(object + '.write("' + text + '");');
+	eval(object + '.write(text);');
 }
 
 function File(name, src)
