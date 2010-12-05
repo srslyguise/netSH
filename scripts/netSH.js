@@ -117,7 +117,7 @@ function netSH(obj_name, base_element)
 	this.writeFile = function(file)
 	{
 		if(GetModuleByName("file") != null)
-			base_element.innerHTML += "<pre class=file>" + file + "</pre>";
+			base_element.innerHTML += "<pre class=file_content>" + file + "</pre>";
 		else
 			base_element.innerHTML += "<pre class=text>" + file + "</pre>";
 	}
