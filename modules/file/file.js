@@ -35,6 +35,13 @@ this.cat = function(argc, argv)
 	else
 	{
 		file = loadFILE(netSH_prefix + src);
+
+		if(file == null)
+		{
+			write("cat: " + argv[1] + ": Can't load file<br>");
+			return;
+		}
+
 		file = file.replace(/</g, "&lt;");
 		file = file.replace(/>/g, "&gt;");
 
@@ -67,5 +74,12 @@ function writeFile(file)
 
 function getExtension(file)
 {
-	return file.match(/\.(.*)?$/)[1];
+	try
+	{
+		return file.match(/\.(.*)?$/)[1];
+	}
+	catch(e)
+	{
+		return null;
+	}
 }
