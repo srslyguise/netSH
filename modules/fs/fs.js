@@ -240,7 +240,7 @@ function showPath(path)
 		write("<a class=file>" + path.files[i].Name + "</a><br>");
 
 	for(var i = 0; i < path.links.length; i++)
-		write("<a class=link>" + path.links[i].Name + "</a><br>");
+		write("<a class=link>" + path.links[i].Name + "</a><a class=text> -&gt; " + path.links[i].Href + "</a><br>");
 }
 
 function setPrompt(str)
