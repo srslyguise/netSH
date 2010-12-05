@@ -9,6 +9,7 @@ this.init = function(obj)
 {
 	object = obj;
 	file_xml = loadXML(netSH_prefix + "modules/file/config/file.xml");
+	addStyle(netSH_prefix + "modules/file/styles/file.css");
 
 	if(file_xml.documentElement.getAttribute("sh") == "true")
 		sh_module = eval(object + '.getModuleByName("sh");');
@@ -70,6 +71,11 @@ function write(text)
 function writeFile(file)
 {
 	eval(object + '.writeFile(file);');
+}
+
+function addStyle(file)
+{
+	eval(object + '.addStyle_pub(file);');
 }
 
 function getExtension(file)
