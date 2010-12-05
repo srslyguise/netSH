@@ -17,6 +17,11 @@ this.init = function(obj)
 	setPrompt(getUser() + ":" + base_path.Name + " " + getPrivilege() + "_");
 }
 
+this.getCurrentPath = function()
+{
+	return current.Name;
+}
+
 this.cd = function(argc, argv)
 {
 	if(argc < 2)
