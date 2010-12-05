@@ -16,4 +16,5 @@
 	<Module name="fs" src="modules/fs/fs.js"/>
 	<Module name="sh" src="modules/syntaxhighlighter/sh.js"/>
 	<Module name="file" src="modules/file/file.js"/>
+	<Module name="blog" src="modules/blog/blog.js"/>
 </Modules>
