@@ -116,7 +116,10 @@ function netSH(obj_name, base_element)
 
 	this.writeFile = function(file)
 	{
-		base_element.innerHTML += "<pre class=text>" + file + "</pre>";
+		if(GetModuleByName("file") != null)
+			base_element.innerHTML += "<pre class=file>" + file + "</pre>";
+		else
+			base_element.innerHTML += "<pre class=text>" + file + "</pre>";
 	}
 
 	function loadXML(file)
