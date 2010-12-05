@@ -12,6 +12,7 @@ this.init = function(obj)
 	object = obj;
 	fs = loadXML(netSH_prefix + "modules/fs/config/fs.xml");
 	fs = fs.documentElement;
+	addStyle(netSH_prefix + "modules/fs/styles/fs.css");
 
 	current = base_path = createTree("/", fs);
 	setPrompt(getUser() + ":" + base_path.Name + " " + getPrivilege() + "_");
@@ -313,4 +314,9 @@ function getPrivilege()
 	var base_module = eval(object + '.getModuleByName("base");');
 
 	return base_module.getPrivilege();
+}
+
+function addStyle(file)
+{
+	eval(object + '.addStyle_pub(file);');
 }
