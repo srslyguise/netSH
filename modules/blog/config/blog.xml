@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Blog[
+
+<!ELEMENT Blog (Post+)>
+<!ELEMENT Post (#PCDATA)>
+
+<!ATTLIST Post
+	title CDATA #REQUIRED
+	author CDATA #REQUIRED
+	date CDATA #REQUIRED
+>
+]>
+
+<Blog>
+	<Post title="test" author="edx" date="dom  5 dic 2010, 18.31.21, CET">LOL
+LMAO
+LULZ
+LOLZ</Post>
+</Blog>
