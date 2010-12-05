@@ -1,4 +1,4 @@
-var netSH_prefix = "/netSH/";
+var netSH_prefix = "/";
 
 function netSH(obj_name, base_element)
 {
