@@ -1,4 +1,4 @@
-var netSH_prefix = "/";
+var netSH_prefix = "/netSH/";
 
 function netSH(obj_name, base_element)
 {
@@ -24,6 +24,7 @@ function netSH(obj_name, base_element)
 		base_element.appendChild(prompt_);
 		base_element.appendChild(input);
 		input.focus();
+		input.select();
 	}
 	
 	this.handler = function(kc)
@@ -34,10 +35,34 @@ function netSH(obj_name, base_element)
 			base_element.innerHTML += "<a class=\"text\">" + input.value + "</a><br>";
 			parse(input.value);
 
+			if(navigator.appName == "Microsoft Internet Explorer")
+			{
+				var user = "";
+				var privilege = "";
+				var path = "";
+
+				if(GetModuleByName("base") != null)
+				{
+					user = GetModuleByName("base").getUser();
+					privilege = GetModuleByName("base").getPrivilege();
+				}
+
+				if(GetModuleByName("fs") != null)
+					path = GetModuleByName("fs").getCurrentPath();
+
+				prompt_.innerHTML = (user != "") ? user : "netSH";
+				prompt_.innerHTML += ":";
+				prompt_.innerHTML += path;
+				prompt_.innerHTML += " ";
+				prompt_.innerHTML += (privilege != "") ? privilege : "";
+				prompt_.innerHTML += "_";
+			}
+
 			base_element.appendChild(prompt_);
 			input.value = "";
 			base_element.appendChild(input);
 			input.focus();
+			input.select();
 		}
 	}
 
@@ -189,6 +214,11 @@ function netSH(obj_name, base_element)
 	}
 
 	this.getModuleByName = function(name)
+	{
+		return GetModuleByName(name);
+	}
+
+	function GetModuleByName(name)
 	{
 		for(var i = 0; i < modules.length; i++)
 			if(modules[i].name == name)
