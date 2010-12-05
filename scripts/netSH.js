@@ -18,12 +18,11 @@ function netSH(obj_name, base_element)
 		input.type = "text";
 		input.setAttribute("onkeydown", obj_name + ".handler(event.keyCode)");
 
-		base_element.appendChild(prompt_);
-		base_element.appendChild(input);
-
 		initStyles();
 		initModules();
 
+		base_element.appendChild(prompt_);
+		base_element.appendChild(input);
 		input.focus();
 	}
 	
@@ -164,10 +163,15 @@ function netSH(obj_name, base_element)
 		for(i = 0; i < modules_xml.getElementsByTagName('Module').length; i++)
 		{
 			var file = "";
+			var name = modules_xml.getElementsByTagName('Module')[i].getAttribute('name');
+
+			base_element.innerHTML = "<a class=text>Loading module \'" + name + "\'...</a>";
 
 			file = loadFILE(netSH_prefix + modules_xml.getElementsByTagName('Module')[i].getAttribute('src'));
-			addModule(modules_xml.getElementsByTagName('Module')[i].getAttribute('name'), file);
+			addModule(name, file);
 		}
+
+		base_element.innerHTML = "";
 	}
 
 	function initStyles()
