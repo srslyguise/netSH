@@ -17,7 +17,7 @@ this.highlight = function(text, lang)
 	var current_module = null;
 
 	if(languages[lang] == undefined)
-		return;
+		return text;
 
 	current_module = getModuleByName("sh_" + lang);
 
@@ -26,7 +26,7 @@ this.highlight = function(text, lang)
 		var module = loadFILE(netSH_prefix + languages[lang]);
 
 		if(module == null)
-			return;
+			return text;
 
 		loadModule("sh_" + lang, module);
 	}
@@ -34,7 +34,7 @@ this.highlight = function(text, lang)
 	current_module = getModuleByName("sh_" + lang);
 
 	if(current_module == null)
-		return;
+		return text;
 
 	text = current_module.highlight(text);
 
