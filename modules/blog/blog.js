@@ -61,7 +61,7 @@ function writePost(num)
 	content = blog_xml.getElementsByTagName('Post')[num].childNodes[0].nodeValue;
 
 	div += "<div class=blog_title>" + title + "</div>";
-	div += "<div class=blog_content><pre>" + content + "</pre></div>";
+	div += "<div class=blog_content><pre class=text>" + content + "</pre></div>";
 	div += "<div class=blog_info>" + "Posted by " + author + " on " + date + "</div>";
 
 	div += "</div>";
