@@ -1,16 +1,19 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 
-/* Test
+int test; /* Test
  * multiline
  * comment */
-
-/* N I G G A */
+char test2; /* N I G G A */
 
 //Test single line comment
-//Another test
-
+short test3; //Another test
 //Yet another test
+//Fuck
+
+/* This
+ * is
+ * another... */ int test4; /* ...test */
 
 void destroy( GtkWidget *widget, gpointer data);
 
