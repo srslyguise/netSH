@@ -3,9 +3,14 @@ this.name = null;
 
 var object;
 var keywords = new Array(
-		"#445588:void char int enum float double short long signed unsigned const auto extern register static struct typedef union volatile",
-		"#FFFF00:break case continue default do else for goto if return sizeof switch while"
+		"color: #445588-|-void char int enum float double short long signed unsigned const auto extern register static struct typedef union volatile",
+		"color: #FFFF00-|-break case continue default do else for goto if return sizeof switch while"
 );
+var others = {
+	"comments":"color: cyan",
+	"macros":"color: blue",
+	"strings":"color: red"
+}
 
 this.init = function(obj)
 {
@@ -14,21 +19,69 @@ this.init = function(obj)
 
 this.highlight = function(text)
 {
-	var color = "";
-	var words = "";
+	var rows = text.split("\n");
+	var buf = "";
 
-	text = hlMacros(text);
+	var ml_comment1 = new RegExp("(\\/\\*)(.*)(\\*\\/)", "g");
+	var ml_comment2 = new RegExp("(\\/\\*)(.*)", "g");
+	var ml_comment3 = new RegExp("(.*)(\\*\\/)", "g");
+	var ml_comment4 = new RegExp("(.*\\*\\/)(.*)(\\/\\*.*)", "g");
+	var sl_comment = new RegExp("\\/\\/.*", "");
+	var macros = new RegExp("(.*)(#.*)", "");
+	var strings = new RegExp("(\\\")(.*)(\\\")", "");
 
-	for(var i = 0; i < keywords.length; i++)
+	var sub = new Array();
+
+	for(var i = 0; i < rows.length; i++)
 	{
-		color = keywords[i].split(":")[0];
-		words = keywords[i].split(":")[1];
+		if((sub = macros.exec(rows[i])) != null)
+		{
+			if(sub[1].match(/[\w]+/) == null);
+				rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["macros"] + "\">" + sub[0] + "</a>");
+			continue;
+		}
 
-		text = hlWords(color, words.split(" "), text);
+		if((sub = strings.exec(rows[i])) != null)
+		{
+			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["strings"] + "\">" + sub[0] + "</a>");
+		}
+
+		rows[i] = hl_keyword(rows[i]);
+
+		if((sub = ml_comment4.exec(rows[i])) != null)
+		{
+			rows[i] = rows[i].replace(sub[0], sub[1] + "</a>" + sub[2] + "<a style=\"" + others["comments"] + "\">" + sub[3]);
+			continue;
+		}
+
+		if((sub = ml_comment1.exec(rows[i])) != null)
+		{
+			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["comments"] + "\">" + sub[0] + "</a>");
+			continue;
+		}
+
+		if((sub = ml_comment2.exec(rows[i])) != null)
+		{
+			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["comments"] + "\">" + sub[0]);
+			continue;
+		}
+
+		if((sub = ml_comment3.exec(rows[i])) != null)
+		{
+			rows[i] = rows[i].replace(sub[0], sub[0] + "</a>");
+			continue;
+		}
+
+		if((sub = sl_comment.exec(rows[i])) != null)
+		{
+			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["comments"] + "\">" + sub[0] + "</a>");
+		}
 	}
 
-	text = hlMultiLineComments(text);
-	text = hlSingleLineComments(text);
+	for(var i = 0; i < rows.length; i++)
+		buf += rows[i] + "\n";
+
+	text = buf;
 
 	return text;
 }
@@ -38,79 +91,25 @@ function loadFILE(file)
 	return eval(object + '.loadFILE_pub("' + file + '");');
 }
 
-function hlMultiLineComments(text)
+function hl_keyword(row)
 {
-	var pos1 = 0;
-	var pos2 = 0;
 	var substr = "";
-	var to_replace = new Array();
 
-	while((pos1 != -1) && (pos2 < text.length))
+	for(var i = 0; i < keywords.length; i++)
 	{
-		pos1 = text.indexOf("/*", pos2 + 2);
-		pos2 = text.indexOf("*/", pos1);
-		substr = text.substr(pos1, pos2 - pos1 + 2);
+		var style = keywords[i].split("-|-")[0];
+		var kws = keywords[i].split("-|-")[1].split(" ");
 
-		if(substr.match(/[\w]+/))
-			to_replace.push(substr);
+		for(var i2 = 0; i2 < kws.length; i2++)
+		{
+			var reg_w = new RegExp("\\b" + kws[i2] + "\\b", "g");
+
+			if((substr = reg_w.exec(row)) != null)
+			{
+				row = row.replace(reg_w, "<a style=\"" + style + "\">" + kws[i2] + "</a>");
+			}
+		}
 	}
 
-	for(var i = 0; i < to_replace.length; i++)
-	{
-		text = text.replace(to_replace[i], "<a style=\"color: cyan\">" + to_replace[i] + "</a>");
-	}
-
-	return text;
-}
-
-function hlSingleLineComments(text)
-{
-	var reg = new RegExp('//.*', "g");
-	var sub = "";
-	var to_replace = new Array();
-
-	while((sub = reg.exec(text)) != null)
-	{
-		to_replace.push(sub);
-	}
-
-	for(var i = 0; i < to_replace.length; i++)
-	{
-		text = text.replace(to_replace[i], "<a style=\"color: cyan\">" + to_replace[i] + "</a>");
-	}
-
-	return text;
-}
-
-function hlMacros(text)
-{
-	var reg = new RegExp('#.*', "g");
-	var sub = "";
-	var to_replace = new Array();
-
-	while((sub = reg.exec(text)) != null)
-	{
-		to_replace.push(sub);
-	}
-
-	for(var i = 0; i < to_replace.length; i++)
-	{
-		text = text.replace(to_replace[i], "<a style=\"color: blue\">" + to_replace[i] + "</a>");
-	}
-
-	return text;
-}
-
-function hlWords(color, words, text)
-{
-	var sub = "";
-
-	for(var i = 0; i < words.length; i++)
-	{
-		var reg = new RegExp("\\b" + words[i] + "\\b", "g");
-
-		text = text.replace(reg, "<a style=\"color :" + color + "\">" + words[i] + "</a>");
-	}
-
-	return text;
+	return row;
 }
