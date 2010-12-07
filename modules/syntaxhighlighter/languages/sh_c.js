@@ -1,115 +1,409 @@
-this.functionList = new Array();
-this.name = null;
-
-var object;
-var keywords = new Array(
-		"color: #445588-|-void char int enum float double short long signed unsigned const auto extern register static struct typedef union volatile",
-		"color: #FFFF00-|-break case continue default do else for goto if return sizeof switch while"
-);
-var others = {
-	"comments":"color: cyan",
-	"macros":"color: blue",
-	"strings":"color: red"
+if (! this.sh_languages) {
+  this.sh_languages = {};
 }
-
-this.init = function(obj)
-{
-	object = obj;
-}
-
-this.highlight = function(text)
-{
-	var rows = text.split("\n");
-	var buf = "";
-
-	var ml_comment1 = new RegExp("(\\/\\*)(.*)(\\*\\/)", "g");
-	var ml_comment2 = new RegExp("(\\/\\*)(.*)", "g");
-	var ml_comment3 = new RegExp("(.*)(\\*\\/)", "g");
-	var ml_comment4 = new RegExp("(.*\\*\\/)(.*)(\\/\\*.*)", "g");
-	var sl_comment = new RegExp("\\/\\/.*", "");
-	var macros = new RegExp("(.*)(#.*)", "");
-	var strings = new RegExp("(\\\")(.*)(\\\")", "");
-
-	var sub = new Array();
-
-	for(var i = 0; i < rows.length; i++)
-	{
-		if((sub = macros.exec(rows[i])) != null)
-		{
-			if(sub[1].match(/[\w]+/) == null);
-				rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["macros"] + "\">" + sub[0] + "</a>");
-			continue;
-		}
-
-		if((sub = strings.exec(rows[i])) != null)
-		{
-			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["strings"] + "\">" + sub[0] + "</a>");
-		}
-
-		rows[i] = hl_keyword(rows[i]);
-
-		if((sub = ml_comment4.exec(rows[i])) != null)
-		{
-			rows[i] = rows[i].replace(sub[0], sub[1] + "</a>" + sub[2] + "<a style=\"" + others["comments"] + "\">" + sub[3]);
-			continue;
-		}
-
-		if((sub = ml_comment1.exec(rows[i])) != null)
-		{
-			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["comments"] + "\">" + sub[0] + "</a>");
-			continue;
-		}
-
-		if((sub = ml_comment2.exec(rows[i])) != null)
-		{
-			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["comments"] + "\">" + sub[0]);
-			continue;
-		}
-
-		if((sub = ml_comment3.exec(rows[i])) != null)
-		{
-			rows[i] = rows[i].replace(sub[0], sub[0] + "</a>");
-			continue;
-		}
-
-		if((sub = sl_comment.exec(rows[i])) != null)
-		{
-			rows[i] = rows[i].replace(sub[0], "<a style=\"" + others["comments"] + "\">" + sub[0] + "</a>");
-		}
-	}
-
-	for(var i = 0; i < rows.length; i++)
-		buf += rows[i] + "\n";
-
-	text = buf;
-
-	return text;
-}
-
-function loadFILE(file)
-{
-	return eval(object + '.loadFILE_pub("' + file + '");');
-}
-
-function hl_keyword(row)
-{
-	var substr = "";
-
-	for(var i = 0; i < keywords.length; i++)
-	{
-		var style = keywords[i].split("-|-")[0];
-		var kws = keywords[i].split("-|-")[1].split(" ");
-
-		for(var i2 = 0; i2 < kws.length; i2++)
-		{
-			var reg_w = new RegExp("\\b" + kws[i2] + "\\b", "g");
-
-			if((substr = reg_w.exec(row)) != null)
-			{
-				row = row.replace(reg_w, "<a style=\"" + style + "\">" + kws[i2] + "</a>");
-			}
-		}
-	}
-
-	return row;
-}
+sh_languages['c'] = [
+  [
+    [
+      /\/\/\//g,
+      'sh_comment',
+      1
+    ],
+    [
+      /\/\//g,
+      'sh_comment',
+      7
+    ],
+    [
+      /\/\*\*/g,
+      'sh_comment',
+      8
+    ],
+    [
+      /\/\*/g,
+      'sh_comment',
+      9
+    ],
+    [
+      /(\bstruct)([ \t]+)([A-Za-z0-9_]+)/g,
+      ['sh_keyword', 'sh_normal', 'sh_classname'],
+      -1
+    ],
+    [
+      /^[ \t]*#(?:[ \t]*include)/g,
+      'sh_preproc',
+      10,
+      1
+    ],
+    [
+      /^[ \t]*#(?:[ \t]*[A-Za-z0-9_]*)/g,
+      'sh_preproc',
+      -1
+    ],
+    [
+      /\b[+-]?(?:(?:0x[A-Fa-f0-9]+)|(?:(?:[\d]*\.)?[\d]+(?:[eE][+-]?[\d]+)?))u?(?:(?:int(?:8|16|32|64))|L)?\b/g,
+      'sh_number',
+      -1
+    ],
+    [
+      /"/g,
+      'sh_string',
+      13
+    ],
+    [
+      /'/g,
+      'sh_string',
+      14
+    ],
+    [
+      /\b(?:__asm|__cdecl|__declspec|__export|__far16|__fastcall|__fortran|__import|__pascal|__rtti|__stdcall|_asm|_cdecl|__except|_export|_far16|_fastcall|__finally|_fortran|_import|_pascal|_stdcall|__thread|__try|asm|auto|break|case|catch|cdecl|const|continue|default|do|else|enum|extern|for|goto|if|pascal|register|return|sizeof|static|struct|switch|typedef|union|volatile|while)\b/g,
+      'sh_keyword',
+      -1
+    ],
+    [
+      /\b(?:bool|char|double|float|int|long|short|signed|unsigned|void|wchar_t)\b/g,
+      'sh_type',
+      -1
+    ],
+    [
+      /~|!|%|\^|\*|\(|\)|-|\+|=|\[|\]|\\|:|;|,|\.|\/|\?|&|<|>|\|/g,
+      'sh_symbol',
+      -1
+    ],
+    [
+      /\{|\}/g,
+      'sh_cbracket',
+      -1
+    ],
+    [
+      /(?:[A-Za-z]|_)[A-Za-z0-9_]*(?=[ \t]*\()/g,
+      'sh_function',
+      -1
+    ],
+    [
+      /([A-Za-z](?:[^`~!@#$%&*()_=+{}|;:",<.>\/?'\\[\]\^\-\s]|[_])*)((?:<.*>)?)(\s+(?=[*&]*[A-Za-z][^`~!@#$%&*()_=+{}|;:",<.>\/?'\\[\]\^\-\s]*\s*[`~!@#$%&*()_=+{}|;:",<.>\/?'\\[\]\^\-\[\]]+))/g,
+      ['sh_usertype', 'sh_usertype', 'sh_normal'],
+      -1
+    ]
+  ],
+  [
+    [
+      /$/g,
+      null,
+      -2
+    ],
+    [
+      /(?:<?)[A-Za-z0-9_\.\/\-_~]+@[A-Za-z0-9_\.\/\-_~]+(?:>?)|(?:<?)[A-Za-z0-9_]+:\/\/[A-Za-z0-9_\.\/\-_~]+(?:>?)/g,
+      'sh_url',
+      -1
+    ],
+    [
+      /<\?xml/g,
+      'sh_preproc',
+      2,
+      1
+    ],
+    [
+      /<!DOCTYPE/g,
+      'sh_preproc',
+      4,
+      1
+    ],
+    [
+      /<!--/g,
+      'sh_comment',
+      5
+    ],
+    [
+      /<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)(?:\/)?>/g,
+      'sh_keyword',
+      -1
+    ],
+    [
+      /<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)/g,
+      'sh_keyword',
+      6,
+      1
+    ],
+    [
+      /&(?:[A-Za-z0-9]+);/g,
+      'sh_preproc',
+      -1
+    ],
+    [
+      /<(?:\/)?[A-Za-z][A-Za-z0-9]*(?:\/)?>/g,
+      'sh_keyword',
+      -1
+    ],
+    [
+      /<(?:\/)?[A-Za-z][A-Za-z0-9]*/g,
+      'sh_keyword',
+      6,
+      1
+    ],
+    [
+      /@[A-Za-z]+/g,
+      'sh_type',
+      -1
+    ],
+    [
+      /(?:TODO|FIXME|BUG)(?:[:]?)/g,
+      'sh_todo',
+      -1
+    ]
+  ],
+  [
+    [
+      /\?>/g,
+      'sh_preproc',
+      -2
+    ],
+    [
+      /([^=" \t>]+)([ \t]*)(=?)/g,
+      ['sh_type', 'sh_normal', 'sh_symbol'],
+      -1
+    ],
+    [
+      /"/g,
+      'sh_string',
+      3
+    ]
+  ],
+  [
+    [
+      /\\(?:\\|")/g,
+      null,
+      -1
+    ],
+    [
+      /"/g,
+      'sh_string',
+      -2
+    ]
+  ],
+  [
+    [
+      />/g,
+      'sh_preproc',
+      -2
+    ],
+    [
+      /([^=" \t>]+)([ \t]*)(=?)/g,
+      ['sh_type', 'sh_normal', 'sh_symbol'],
+      -1
+    ],
+    [
+      /"/g,
+      'sh_string',
+      3
+    ]
+  ],
+  [
+    [
+      /-->/g,
+      'sh_comment',
+      -2
+    ],
+    [
+      /<!--/g,
+      'sh_comment',
+      5
+    ]
+  ],
+  [
+    [
+      /(?:\/)?>/g,
+      'sh_keyword',
+      -2
+    ],
+    [
+      /([^=" \t>]+)([ \t]*)(=?)/g,
+      ['sh_type', 'sh_normal', 'sh_symbol'],
+      -1
+    ],
+    [
+      /"/g,
+      'sh_string',
+      3
+    ]
+  ],
+  [
+    [
+      /$/g,
+      null,
+      -2
+    ]
+  ],
+  [
+    [
+      /\*\//g,
+      'sh_comment',
+      -2
+    ],
+    [
+      /(?:<?)[A-Za-z0-9_\.\/\-_~]+@[A-Za-z0-9_\.\/\-_~]+(?:>?)|(?:<?)[A-Za-z0-9_]+:\/\/[A-Za-z0-9_\.\/\-_~]+(?:>?)/g,
+      'sh_url',
+      -1
+    ],
+    [
+      /<\?xml/g,
+      'sh_preproc',
+      2,
+      1
+    ],
+    [
+      /<!DOCTYPE/g,
+      'sh_preproc',
+      4,
+      1
+    ],
+    [
+      /<!--/g,
+      'sh_comment',
+      5
+    ],
+    [
+      /<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)(?:\/)?>/g,
+      'sh_keyword',
+      -1
+    ],
+    [
+      /<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)/g,
+      'sh_keyword',
+      6,
+      1
+    ],
+    [
+      /&(?:[A-Za-z0-9]+);/g,
+      'sh_preproc',
+      -1
+    ],
+    [
+      /<(?:\/)?[A-Za-z][A-Za-z0-9]*(?:\/)?>/g,
+      'sh_keyword',
+      -1
+    ],
+    [
+      /<(?:\/)?[A-Za-z][A-Za-z0-9]*/g,
+      'sh_keyword',
+      6,
+      1
+    ],
+    [
+      /@[A-Za-z]+/g,
+      'sh_type',
+      -1
+    ],
+    [
+      /(?:TODO|FIXME|BUG)(?:[:]?)/g,
+      'sh_todo',
+      -1
+    ]
+  ],
+  [
+    [
+      /\*\//g,
+      'sh_comment',
+      -2
+    ],
+    [
+      /(?:<?)[A-Za-z0-9_\.\/\-_~]+@[A-Za-z0-9_\.\/\-_~]+(?:>?)|(?:<?)[A-Za-z0-9_]+:\/\/[A-Za-z0-9_\.\/\-_~]+(?:>?)/g,
+      'sh_url',
+      -1
+    ],
+    [
+      /(?:TODO|FIXME|BUG)(?:[:]?)/g,
+      'sh_todo',
+      -1
+    ]
+  ],
+  [
+    [
+      /$/g,
+      null,
+      -2
+    ],
+    [
+      /</g,
+      'sh_string',
+      11
+    ],
+    [
+      /"/g,
+      'sh_string',
+      12
+    ],
+    [
+      /\/\/\//g,
+      'sh_comment',
+      1
+    ],
+    [
+      /\/\//g,
+      'sh_comment',
+      7
+    ],
+    [
+      /\/\*\*/g,
+      'sh_comment',
+      8
+    ],
+    [
+      /\/\*/g,
+      'sh_comment',
+      9
+    ]
+  ],
+  [
+    [
+      /$/g,
+      null,
+      -2
+    ],
+    [
+      />/g,
+      'sh_string',
+      -2
+    ]
+  ],
+  [
+    [
+      /$/g,
+      null,
+      -2
+    ],
+    [
+      /\\(?:\\|")/g,
+      null,
+      -1
+    ],
+    [
+      /"/g,
+      'sh_string',
+      -2
+    ]
+  ],
+  [
+    [
+      /"/g,
+      'sh_string',
+      -2
+    ],
+    [
+      /\\./g,
+      'sh_specialchar',
+      -1
+    ]
+  ],
+  [
+    [
+      /'/g,
+      'sh_string',
+      -2
+    ],
+    [
+      /\\./g,
+      'sh_specialchar',
+      -1
+    ]
+  ]
+];
