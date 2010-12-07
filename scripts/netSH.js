@@ -114,10 +114,15 @@ function netSH(obj_name, base_element)
 		Write(text);
 	}
 
-	this.writeFile = function(file)
+	this.writeFile = function(file, lang)
 	{
-		if(GetModuleByName("file") != null)
-			base_element.innerHTML += "<pre class=file_content>" + file + "</pre>";
+		var sh_module = null;
+
+		if((sh_module = GetModuleByName("sh")) != null)
+		{
+			base_element.innerHTML += "<pre class=sh_" + lang + ">" + file + "</pre>";
+			sh_module.highlight(lang);
+		}
 		else
 			base_element.innerHTML += "<pre class=text>" + file + "</pre>";
 	}
@@ -166,14 +171,41 @@ function netSH(obj_name, base_element)
 		style.type = "text/css";
 		style.href = src;
 
-		document.getElementsByTagName('head')[0].appendChild(style);
+		for(var i = 0; i < document.getElementsByTagName('head').length; i++)
+			if(document.getElementsByTagName('head')[i].tagName == "link")
+				if(document.getElementsByTagName('head')[i].getAttribute("href") == src)
+					return null;
 
+		document.getElementsByTagName('head')[0].appendChild(style);
+		return 1;
 	}
 
 	this.addStyle_pub = function(src)
 	{
-		addStyle(src);
+		return addStyle(src);
 	}
+
+	function addScript(src)
+	{
+		var script = document.createElement('script');
+
+		script.type = "text/javascript";
+		script.src = src;
+
+		for(var i = 0; i < document.getElementsByTagName('head').length; i++)
+			if(document.getElementsByTagName('head')[i].tagName == "script")
+				if(document.getElementsByTagName('head')[i].getAttribute("src") == src)
+					return null;
+
+		document.getElementsByTagName('head')[0].appendChild(script);
+		return 1;
+	}
+
+	this.addScript_pub = function(src)
+	{
+		return addScript(src);
+	}
+
 
 	function addModule(name, file)
 	{
