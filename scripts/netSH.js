@@ -120,7 +120,11 @@ function netSH(obj_name, base_element)
 
 		if((sh_module = GetModuleByName("sh")) != null)
 		{
-			base_element.innerHTML += "<pre class=sh_" + lang + ">" + file + "</pre>";
+			if(lang != null)
+				base_element.innerHTML += "<pre class=sh_" + lang + ">" + file + "</pre>";
+			else
+				base_element.innerHTML += "<pre class=file_content>" + file + "</pre>";
+
 			sh_module.highlight(lang);
 		}
 		else
