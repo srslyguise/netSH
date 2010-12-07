@@ -2,43 +2,33 @@ this.functionList = new Array();
 this.name = null;
 
 var object;
+var style = "modules/syntaxhighlighter/styles/sh_vim-dark.css";
 
 var languages = {
-	"c":"modules/syntaxhighlighter/languages/sh_c.js"
+	"c":"modules/syntaxhighlighter/languages/sh_c.js",
+	"perl":"modules/syntaxhighlighter/languages/sh_perl.js"
 }
 
 this.init = function(obj)
 {
 	object = obj;
+	addScript(netSH_prefix + "modules/syntaxhighlighter/sh_main.js");
+	addStyle(netSH_prefix + style);
 }
 
-this.highlight = function(text, lang)
+this.highlight = function(lang)
 {
 	var current_module = null;
 
 	if(languages[lang] == undefined)
-		return text;
+		return null;
 
-	current_module = getModuleByName("sh_" + lang);
-
-	if(current_module == null)
+	if(addScript(netSH_prefix + languages[lang]) == 1)
 	{
-		var module = loadFILE(netSH_prefix + languages[lang]);
-
-		if(module == null)
-			return text;
-
-		loadModule("sh_" + lang, module);
+		setTimeout("sh_highlightDocument();", 500);
 	}
 
-	current_module = getModuleByName("sh_" + lang);
-
-	if(current_module == null)
-		return text;
-
-	text = current_module.highlight(text);
-
-	return text;
+	return;
 }
 
 function loadFILE(file)
@@ -54,4 +44,14 @@ function loadModule(name, module)
 function getModuleByName(name)
 {
 	return eval(object + '.getModuleByName("' + name + '");');
+}
+
+function addStyle(src)
+{
+	return eval(object + '.addStyle_pub(src);');
+}
+
+function addScript(src)
+{
+	return eval(object + '.addScript_pub(src);');
 }
