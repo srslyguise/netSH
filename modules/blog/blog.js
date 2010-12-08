@@ -51,7 +51,10 @@ function writePost(num)
 	var content = "";
 
 	if((num > blog_xml.getElementsByTagName('Post').length) || (num <= 0))
+	{
+		write("blog: post number " + num + " not found<br>");
 		return;
+	}
 
 	--num;
 
