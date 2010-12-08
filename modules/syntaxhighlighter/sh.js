@@ -19,14 +19,13 @@ this.init = function(obj)
 this.highlight = function(lang)
 {
 	var current_module = null;
+	var ready = false; 
 
 	if(languages[lang] == undefined)
 		return null;
 
 	if(addScript(netSH_prefix + languages[lang]) == 1)
-	{
-		setTimeout("sh_highlightDocument();", 500);
-	}
+		setTimeout("sh_highlightDocument();", 700);
 
 	return;
 }
