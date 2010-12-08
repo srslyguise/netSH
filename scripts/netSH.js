@@ -118,13 +118,18 @@ function netSH(obj_name, base_element)
 	this.writeFile = function(file, lang)
 	{
 		var sh_module = null;
+		var pre_ = document.createElement('pre');
 
 		if((sh_module = GetModuleByName("sh")) != null)
 		{
+			pre_.innerHTML = file;
+
 			if(lang != null)
-				base_element.innerHTML += "<pre class=sh_" + lang + ">" + file + "</pre>";
+				pre_.setAttribute('class', "sh_" + lang);
 			else
-				base_element.innerHTML += "<pre class=file_content>" + file + "</pre>";
+				pre_.setAttribute('class', "file_content");
+
+			base_element.appendChild(pre_);
 
 			sh_module.highlight(lang);
 		}
