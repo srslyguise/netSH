@@ -2,7 +2,7 @@ this.functionList = new Array();
 this.name = null;
 
 var object;
-var style = "modules/syntaxhighlighter/styles/sh_vim-dark.css";
+var style = "modules/syntaxhighlighter/styles/sh_typical.css";
 
 var languages = {
 	"c":"modules/syntaxhighlighter/languages/sh_c.js",
