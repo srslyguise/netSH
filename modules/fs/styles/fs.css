@@ -1,23 +1,23 @@
 .dir{
 	color: blue;
-	font-family: Times New Roman;
-	font-size: 10pt;
+	font-family: Monospace;
+	font-size: 8pt;
 	font-weight: normal;
 	word-wrap: break-word;
 }
 
 .file{
 	color: green;
-	font-family: Times New Roman;
-	font-size: 10pt;
+	font-family: Monospace;
+	font-size: 8pt;
 	font-weight: normal;
 	word-wrap: break-word;
 }
 
 .link{
 	color: cyan;
-	font-family: Times New Roman;
-	font-size: 10pt;
+	font-family: Monospace;
+	font-size: 8pt;
 	font-weight: normal;
 	word-wrap: break-word;
 }
