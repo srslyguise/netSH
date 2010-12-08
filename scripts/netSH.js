@@ -68,9 +68,10 @@ function netSH(obj_name, base_element)
 
 	function parse(text)
 	{
+		var cmd = text.match(/[(\x00-\x19)(\x21-\xFF)]+/);
+
 		if(text.match(/^[\w\.\u00A1-\uFFFF]+[\t]*/))
 		{
-			var cmd = text.match(/[(\x00-\x19)(\x21-\xFF)]+/);
 			var argv = text.split(" ");
 
 			for(var i = 0; i < modules.length; i++)
@@ -82,7 +83,7 @@ function netSH(obj_name, base_element)
 					}
 		}
 		
-		Write("netSH: " + text + ": command not found<br>");
+		Write("netSH: " + cmd + ": command not found<br>");
 	}
 
 	this.setPrompt = function(p)
@@ -106,7 +107,7 @@ function netSH(obj_name, base_element)
 
 	function Write(text)
 	{
-		base_element.innerHTML += "<a class=text>" + text + "</a>";
+		base_element.innerHTML += "<span class=text>" + text + "</span>";
 	}
 
 	this.write = function(text)
