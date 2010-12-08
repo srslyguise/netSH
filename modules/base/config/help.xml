@@ -23,6 +23,16 @@
 		<Description><![CDATA[Change working directory]]></Description>
 	</Cmd>
 
+	<Cmd name="cat">
+		<Parameters><![CDATA[&lt;filename&gt;]]></Parameters>
+		<Description><![CDATA[Shows file content]]></Description>
+	</Cmd>
+
+	<Cmd name="blog">
+		<Parameters><![CDATA[[postnum]]]></Parameters>
+		<Description><![CDATA[Shows the blog]]></Description>
+	</Cmd>
+
 	<Cmd name="clear">
 		<Parameters></Parameters>
 		<Description><![CDATA[Clear the screen]]></Description>
