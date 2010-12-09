@@ -31,7 +31,10 @@ this.cd = function(argc, argv)
 		return;
 	}
 
-	Cd(argv[1]);
+	if(Cd(argv[1]) == 2)
+	{
+		write("cd: " + argv[1] + ": Path not found<br>");
+	}
 }
 
 function Cd(path)
@@ -99,7 +102,10 @@ this.ls = function(argc, argv)
 	if(argc < 2)
 		Ls(tmp_path, "");
 	else
-		Ls(tmp_path, argv[1]);
+	{
+		if(Ls(tmp_path, argv[1]) == 2)
+			write("ls: " + argv[1] + ": Path not found<br>");
+	}
 }
 
 function Ls(tmp_path, path)
@@ -148,7 +154,7 @@ function Ls(tmp_path, path)
 			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
 
 			if(Ls(tmp_path, tmp) == 2)
-				write("ls: " + path + ": Path not found<br>")
+				write("ls: " + path + ": Path not found<br>");
 
 			return;
 		}
