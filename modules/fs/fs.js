@@ -168,12 +168,12 @@ function Ls(tmp_path, path)
 	return;
 }
 
-this.getFileSrc = function(file)
+this.getFile = function(file)
 {
-	return GetFileSrc(current, file);
+	return GetFile(current, file);
 }
 
-function GetFileSrc(tmp_path, path)
+function GetFile(tmp_path, path)
 {
 	var tmp = "";
 	var found = false;
@@ -200,7 +200,7 @@ function GetFileSrc(tmp_path, path)
 
 		for(var i = 0; i < tmp_path.files.length; i++)
 			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.files[i].Name)
-				return tmp_path.files[i].Src;
+				return tmp_path.files[i];
 
 		for(var i = 0; (i < tmp_path.subdirs.length) && (found != true); i++)
 			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.subdirs[i].Name)
@@ -217,7 +217,7 @@ function GetFileSrc(tmp_path, path)
 		{
 			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
 
-			var ret = GetFileSrc(tmp_path, tmp);
+			var ret = GetFile(tmp_path, tmp);
 			//alert(ret);
 
 			if(ret == 2)
@@ -264,10 +264,11 @@ function write(text)
 	eval(object + '.write(text);');
 }
 
-function File(name, src)
+function File(name, src, lang)
 {
 	this.Name = name;
 	this.Src = src;
+	this.Lang = lang;
 }
 
 function Link(name, href)
@@ -298,7 +299,7 @@ function createTree(name, fs_)
 		}
 
 		if(fs_.childNodes[i].tagName == "File")
-			node.files.push(new File(fs_.childNodes[i].getAttribute("name"), fs_.childNodes[i].getAttribute("src")));
+			node.files.push(new File(fs_.childNodes[i].getAttribute("name"), fs_.childNodes[i].getAttribute("src"), fs_.childNodes[i].getAttribute("lang")));
 
 		if(fs_.childNodes[i].tagName == "Link")
 			node.links.push(new Link(fs_.childNodes[i].getAttribute("name"), fs_.childNodes[i].getAttribute("href")));
