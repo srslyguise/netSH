@@ -25,11 +25,11 @@ this.cat = function(argc, argv)
 
 	fs_module = eval(object + '.getModuleByName("fs");');
 
-	if((src = fs_module.getFileSrc(argv[1])) == null)
+	if((src = fs_module.getFile(argv[1])) == null)
 		write("cat: " + argv[1] + ": File not found<br>");
 	else
 	{
-		file = loadFILE(netSH_prefix + src);
+		file = loadFILE(netSH_prefix + src.Src);
 
 		if(file == null)
 		{
@@ -40,7 +40,7 @@ this.cat = function(argc, argv)
 		file = file.replace(/</g, "&lt;");
 		file = file.replace(/>/g, "&gt;");
 
-		writeFile(file, getExtension(src));
+		writeFile(file, src.Lang);
 	}
 }
 
@@ -67,16 +67,4 @@ function writeFile(file, lang)
 function addStyle(file)
 {
 	eval(object + '.addStyle_pub(file);');
-}
-
-function getExtension(file)
-{
-	try
-	{
-		return file.match(/\.(.*)?$/)[1];
-	}
-	catch(e)
-	{
-		return null;
-	}
 }
