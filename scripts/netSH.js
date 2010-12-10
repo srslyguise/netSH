@@ -129,6 +129,7 @@ function netSH(obj_name, base_element)
 			else
 				pre_.setAttribute('class', "file_content");
 
+			pre_.style.backgroundColor = "transparent";
 			base_element.appendChild(pre_);
 
 			sh_module.highlight(lang);
