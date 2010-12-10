@@ -12,6 +12,7 @@
 <!ATTLIST File
 	name CDATA #REQUIRED
 	src CDATA #REQUIRED
+	lang CDATA #IMPLIED
 >
 
 <!ATTLIST Link
@@ -29,7 +30,7 @@
 
 	<Directory name="test2">
 		<Directory name="subtest2">
-			<File name="testfile.c" src="res/testfile.c"/>
+			<File name="testfile.c" src="res/testfile.c" lang="c"/>
 		</Directory>
 	</Directory>
 </Fs>
