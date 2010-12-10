@@ -54,6 +54,9 @@ function Cd(path)
 		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
 		//alert("length --> " + current.subdirs.length);
 
+		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == ".")
+			found = true;
+
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == "..")
 		{
 			if(current.prev != null)
@@ -127,6 +130,9 @@ function Ls(tmp_path, path)
 	{
 		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
 		//alert("length --> " + tmp_path.subdirs.length);
+		
+		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == ".")
+			found = true;
 
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == "..")
 		{
@@ -189,6 +195,9 @@ function GetFile(tmp_path, path)
 	{
 		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
 		//alert("length --> " + tmp_path.subdirs.length);
+
+		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == ".")
+			found = true;
 
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == "..")
 		{
