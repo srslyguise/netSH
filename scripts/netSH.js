@@ -8,6 +8,12 @@ function netSH(obj_name, base_element)
 
 	this.init = function()
 	{
+		if(navigator.appName == "Microsoft Internet Explorer")
+		{
+			alert("If you are using Internet Explorer it means that you are an idiot and idiots are not allowed on this site.\nCome back when you get a real browser.");
+			return;
+		}
+
 		prompt_ = document.createElement("a");
 		input = document.createElement("input");
 		modules = new Array();
@@ -34,29 +40,6 @@ function netSH(obj_name, base_element)
 			base_element.removeChild(input);
 			base_element.innerHTML += "<a class=\"text\">" + input.value + "</a><br>";
 			parse(input.value);
-
-			if(navigator.appName == "Microsoft Internet Explorer")
-			{
-				var user = "";
-				var privilege = "";
-				var path = "";
-
-				if(GetModuleByName("base") != null)
-				{
-					user = GetModuleByName("base").getUser();
-					privilege = GetModuleByName("base").getPrivilege();
-				}
-
-				if(GetModuleByName("fs") != null)
-					path = GetModuleByName("fs").getCurrentPath();
-
-				prompt_.innerHTML = (user != "") ? user : "netSH";
-				prompt_.innerHTML += ":";
-				prompt_.innerHTML += path;
-				prompt_.innerHTML += " ";
-				prompt_.innerHTML += (privilege != "") ? privilege : "";
-				prompt_.innerHTML += "_";
-			}
 
 			base_element.appendChild(prompt_);
 			input.value = "";
