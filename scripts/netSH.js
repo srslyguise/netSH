@@ -8,9 +8,9 @@ function netSH(obj_name, base_element)
 
 	this.init = function()
 	{
-		if(navigator.appName == "Microsoft Internet Explorer")
+		if((navigator.appName == "Microsoft Internet Explorer") && !(navigator.appVersion.match(/MSIE 9/)))
 		{
-			alert("If you are using Internet Explorer it means that you are an idiot and idiots are not allowed on this site.\nCome back when you get a real browser.");
+			alert("Current version of IE is not supported, upgrade to IE9");
 			return;
 		}
 
