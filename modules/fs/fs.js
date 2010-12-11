@@ -20,7 +20,7 @@ this.init = function(obj)
 
 this.getCurrentPath = function()
 {
-	return current.Name;
+	return getFullPath(current);
 }
 
 this.cd = function(argc, argv)
