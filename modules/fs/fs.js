@@ -82,7 +82,7 @@ function Cd(path)
 			if(Cd(tmp) == 2)
 			{
 				write("cd: " + path + ": Path not found<br>");
-				setPrompt(getUser() + ":" + current.Name + " " + getPrivilege() + "_");
+				setPrompt(getUser() + ":" + getFullPath(current) + " " + getPrivilege() + "_");
 			}
 
 			return;
@@ -93,7 +93,7 @@ function Cd(path)
 		}
 	}
 
-	setPrompt(getUser() + ":" + current.Name + " " + getPrivilege() + "_");
+	setPrompt(getUser() + ":" + getFullPath(current) + " " + getPrivilege() + "_");
 
 	return;
 }
@@ -256,6 +256,26 @@ function showPath(path)
 
 	for(var i = 0; i < path.links.length; i++)
 		write("<a class=link>" + path.links[i].Name + "</a><a class=text> -&gt; <a href=\"" + path.links[i].Href + "\">" + path.links[i].Href + "</a></a><br>");
+}
+
+function getFullPath(path)
+{
+	var paths = new Array();
+	var fullpath = "";
+
+	while(path != null)
+	{
+		paths.push(path.Name);
+		path = path.prev;
+	}
+
+	for(var i = (paths.length - 2); i >=0; i--)
+		fullpath += '/' + paths[i];
+
+	if(fullpath == "")
+		fullpath = '/';
+
+	return fullpath;
 }
 
 function setPrompt(str)
