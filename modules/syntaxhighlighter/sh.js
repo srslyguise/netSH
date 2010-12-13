@@ -6,7 +6,8 @@ var style = "modules/syntaxhighlighter/styles/sh_typical.css";
 
 var languages = {
 	"c":"modules/syntaxhighlighter/languages/sh_c.js",
-	"perl":"modules/syntaxhighlighter/languages/sh_perl.js"
+	"perl":"modules/syntaxhighlighter/languages/sh_perl.js",
+	"cpp":"modules/syntaxhighlighter/languages/sh_cpp.js"
 }
 
 this.init = function(obj)
