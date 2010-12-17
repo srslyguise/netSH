@@ -13,14 +13,9 @@
 
 
 <Help>
-	<Cmd name="ls">
-		<Parameters><![CDATA[[directory]]]></Parameters>
-		<Description><![CDATA[list directory contents]]></Description>
-	</Cmd>
-
-	<Cmd name="cd">
-		<Parameters><![CDATA[&lt;dirname&gt;]]></Parameters>
-		<Description><![CDATA[Change working directory]]></Description>
+	<Cmd name="blog">
+		<Parameters><![CDATA[[postnum]]]></Parameters>
+		<Description><![CDATA[Shows the blog]]></Description>
 	</Cmd>
 
 	<Cmd name="cat">
@@ -28,13 +23,18 @@
 		<Description><![CDATA[Shows file content]]></Description>
 	</Cmd>
 
-	<Cmd name="blog">
-		<Parameters><![CDATA[[postnum]]]></Parameters>
-		<Description><![CDATA[Shows the blog]]></Description>
+	<Cmd name="cd">
+		<Parameters><![CDATA[&lt;dirname&gt;]]></Parameters>
+		<Description><![CDATA[Change working directory]]></Description>
 	</Cmd>
 
 	<Cmd name="clear">
 		<Parameters></Parameters>
 		<Description><![CDATA[Clear the screen]]></Description>
+	</Cmd>
+
+	<Cmd name="ls">
+		<Parameters><![CDATA[[directory]]]></Parameters>
+		<Description><![CDATA[List directory contents]]></Description>
 	</Cmd>
 </Help>
