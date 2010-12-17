@@ -14,6 +14,7 @@ this.init = function(obj)
 	object = obj;
 	help_xml = loadXML(netSH_prefix + "modules/base/config/help.xml");
 	base_xml = loadXML(netSH_prefix + "modules/base/config/base.xml");
+	addStyle(netSH_prefix + "modules/base/styles/base.css");
 
 	user = base_xml.documentElement.getElementsByTagName('User')[0].getAttribute('name');
 	input = eval(object + '.getInput();');
@@ -33,11 +34,11 @@ this.help = function(argc, argv)
 
 	if(argc < 2)
 	{
-		write("usage: " + argv[0] + " &lt;cmd&gt;<br>");
+		helpList();
 		return;
 	}
 
-	for(i = 0; i < help_xml.getElementsByTagName('Cmd').length; i++)
+	for(var i = 0; i < help_xml.getElementsByTagName('Cmd').length; i++)
 		if((name = help_xml.getElementsByTagName('Cmd')[i].getAttribute('name')) == argv[1])
 		{
 			try
@@ -64,6 +65,44 @@ this.help = function(argc, argv)
 		}
 
 	write("help: " + argv[1] + ": command not found<br>");
+}
+
+function helpList()
+{
+	var description = "";
+	var parameters = "";
+	var name = "";
+	var table = "<table class=help>";
+
+	for(var i = 0; i < help_xml.getElementsByTagName('Cmd').length; i++)
+	{
+		name = help_xml.getElementsByTagName('Cmd')[i].getAttribute('name');
+
+		try
+		{
+			description = help_xml.getElementsByTagName('Cmd')[i].getElementsByTagName('Description')[0].childNodes[0].nodeValue;
+		}
+		catch(e)
+		{
+			description = "";
+		}
+
+		try
+		{
+			parameters = help_xml.getElementsByTagName('Cmd')[i].getElementsByTagName('Parameters')[0].childNodes[0].nodeValue;
+		}
+		catch(e)
+		{
+			parameters = "";
+		}
+
+		table += "<tr><td id=help_name>" + name + "</td>&nbsp;&nbsp;<td id=help_parameters>" + parameters + "</td>&nbsp;&nbsp;<td id=help_description>" + description + "</td></tr>";
+	}
+
+	table += "</table>";
+	write(table);
+
+	return;
 }
 
 this.handler = function(e)
@@ -104,7 +143,7 @@ this.getPrivilege = function()
 
 function write(text)
 {
-	eval(object + '.write("' + text + '");');
+	eval(object + '.write(text);');
 }
 
 function loadXML(file)
@@ -116,4 +155,9 @@ function updateInput(func, params)
 {
 	var old = input.getAttribute("onkeydown");
 	input.setAttribute("onkeydown", object + ".getModuleByName(\"base\")." + func + "(" + params + "); " + old);
+}
+
+function addStyle(file)
+{
+	eval(object + '.addStyle_pub(file);');
 }
