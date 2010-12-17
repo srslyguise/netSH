@@ -1,0 +1,9 @@
+.help #help_name
+{
+	font-style:	italic;
+}
+
+.help #help_description
+{
+	font-weight:	bold;
+}
