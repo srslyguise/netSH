@@ -96,7 +96,7 @@ function helpList()
 			parameters = "";
 		}
 
-		table += "<tr><td id=help_name>" + name + "</td>&nbsp;&nbsp;<td id=help_parameters>" + parameters + "</td>&nbsp;&nbsp;<td id=help_description>" + description + "</td></tr>";
+		table += "<tr><td id=help_name>" + name + "</td><td id=help_parameters>" + parameters + "</td><td id=help_description>" + description + "</td></tr>";
 	}
 
 	table += "</table>";
