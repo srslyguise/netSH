@@ -83,7 +83,7 @@ this.cowsay = function(argc, argv)
 		if(argv[i] == "-f")
 		{
 			i++;
-			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + argv[i].match(/([\w]+[^.cow]*)/)[1] + ".cow")) != null)
+			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + argv[i].match(/([\w\.]+[^.cow]*)/)[1] + ".cow")) != null)
 			{
 				file = file.replace("\$", argv[++i]);
 				write("<pre>" + file + "</pre>");
