@@ -33,6 +33,11 @@
 		<Description><![CDATA[Clear the screen]]></Description>
 	</Cmd>
 
+	<Cmd name="cowsay">
+		<Parameters><![CDATA[[-f cowfile] &lt;message&gt;]]></Parameters>
+		<Description><![CDATA[Configurable speaking cow (and a bit more)]]></Description>
+	</Cmd>
+
 	<Cmd name="ls">
 		<Parameters><![CDATA[[directory]]]></Parameters>
 		<Description><![CDATA[List directory contents]]></Description>
