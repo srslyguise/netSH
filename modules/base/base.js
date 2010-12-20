@@ -1,4 +1,4 @@
-this.functionList = new Array("clear", "help");
+this.functionList = new Array("clear", "help", "cowsay");
 this.name = null;
 
 var help_xml;
@@ -65,6 +65,51 @@ this.help = function(argc, argv)
 		}
 
 	write("help: " + argv[1] + ": command not found<br>");
+}
+
+this.cowsay = function(argc, argv)
+{
+	var default_cow = "default";
+	var file = "";
+
+	if(argc < 2)
+	{
+		write("Usage: " + argv[0] + " [-f cowfile] &lt;message&gt;<br>");
+		return;
+	}
+
+	for(var i = 1; i < argc; i++)
+	{
+		if(argv[i] == "-f")
+		{
+			i++;
+			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + argv[i].match(/([\w]+[^.cow]*)/)[1] + ".cow")) != null)
+			{
+				file = file.replace("\$", argv[++i]);
+				write("<pre>" + file + "</pre>");
+				return;
+			}
+			else
+			{
+				write("cowsay: Could not find " + argv[i] + " cowfile!<br>");
+				return;
+			}
+		}
+		else
+		{
+			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + default_cow + ".cow")) != null)
+			{
+				file = file.replace("\$", argv[i]);
+				write("<pre>" + file + "</pre>");
+				return;
+			}
+			else
+			{
+				write("cowsay: Could not find " + default_cow + " cowfile!<br>");
+				return;
+			}
+		}
+	}
 }
 
 function helpList()
@@ -149,6 +194,11 @@ function write(text)
 function loadXML(file)
 {
 	return eval(object + '.loadXML_pub("' + file + '");');
+}
+
+function loadFILE(file)
+{
+	return eval(object + '.loadFILE_pub("' + file + '");');
 }
 
 function updateInput(func, params)
