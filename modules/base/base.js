@@ -95,7 +95,7 @@ this.cowsay = function(argc, argv)
 			}
 			else
 			{
-				write("cowsay: Could not find " + argv[i].replace(".cow", "") + " cowfile!<br>");
+				write("cowsay: Could not find " + argv[i].replace(/.cow$/, "") + " cowfile!<br>");
 				return;
 			}
 		}
@@ -109,7 +109,7 @@ this.cowsay = function(argc, argv)
 			}
 			else
 			{
-				write("cowsay: Could not find " + default_cow.replace(".cow", "") + " cowfile!<br>");
+				write("cowsay: Could not find " + default_cow.replace(/.cow$/, "") + " cowfile!<br>");
 				return;
 			}
 		}
