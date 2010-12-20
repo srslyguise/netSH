@@ -69,7 +69,7 @@ this.help = function(argc, argv)
 
 this.cowsay = function(argc, argv)
 {
-	var default_cow = "default";
+	var default_cow = "default.cow";
 	var file = "";
 
 	if(argc < 2)
@@ -83,7 +83,11 @@ this.cowsay = function(argc, argv)
 		if(argv[i] == "-f")
 		{
 			i++;
-			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + argv[i].match(/([\w\.]+[^.cow]*)/)[1] + ".cow")) != null)
+
+			if(argv[i].match(/.cow/) == null)
+				argv[i] += ".cow";
+
+			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + argv[i])) != null)
 			{
 				file = file.replace("\$", argv[++i]);
 				write("<pre>" + file + "</pre>");
@@ -91,13 +95,13 @@ this.cowsay = function(argc, argv)
 			}
 			else
 			{
-				write("cowsay: Could not find " + argv[i] + " cowfile!<br>");
+				write("cowsay: Could not find " + argv[i].replace(".cow", "") + " cowfile!<br>");
 				return;
 			}
 		}
 		else
 		{
-			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + default_cow + ".cow")) != null)
+			if((file = loadFILE(netSH_prefix + "modules/base/cows/" + default_cow)) != null)
 			{
 				file = file.replace("\$", argv[i]);
 				write("<pre>" + file + "</pre>");
@@ -105,7 +109,7 @@ this.cowsay = function(argc, argv)
 			}
 			else
 			{
-				write("cowsay: Could not find " + default_cow + " cowfile!<br>");
+				write("cowsay: Could not find " + default_cow.replace(".cow", "") + " cowfile!<br>");
 				return;
 			}
 		}
