@@ -78,7 +78,15 @@ this.date = function(argc, argv)
 	string += " " + today.getDate();
 	string += " " + months[today.getMonth()];
 	string += " " + today.getFullYear();
-	string += ", " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	string += ", ";
+	string += (today.getHours().toString().length == 1) ? "0" + today.getHours() : today.getHours();
+	string += ":";
+
+	string += (today.getMinutes().toString().length == 1) ? "0" + today.getMinutes() : today.getMinutes();
+	string += ":";
+
+	string += (today.getSeconds().toString().length == 1) ? "0" + today.getSeconds() : today.getSeconds();
+
 	string += "<br>";
 
 	write(string);
