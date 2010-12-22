@@ -38,6 +38,11 @@
 		<Description><![CDATA[Configurable speaking cow (and a bit more)]]></Description>
 	</Cmd>
 
+	<Cmd name="date">
+		<Parameters></Parameters>
+		<Description><![CDATA[print the system date and time]]></Description>
+	</Cmd>
+
 	<Cmd name="ls">
 		<Parameters><![CDATA[[directory]]]></Parameters>
 		<Description><![CDATA[List directory contents]]></Description>
