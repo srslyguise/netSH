@@ -1,4 +1,4 @@
-this.functionList = new Array("clear", "help", "cowsay");
+this.functionList = new Array("clear", "help", "date", "cowsay");
 this.name = null;
 
 var help_xml;
@@ -65,6 +65,23 @@ this.help = function(argc, argv)
 		}
 
 	write("help: " + argv[1] + ": command not found<br>");
+}
+
+this.date = function(argc, argv)
+{
+	var days = new Array("sun", "mon", "tue", "wed", "thu", "fri", "sat");
+	var months = new Array("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec");
+	var today = new Date();
+	var string = "";
+
+	string += days[today.getDay()];
+	string += " " + today.getDate();
+	string += " " + months[today.getMonth()];
+	string += " " + today.getFullYear();
+	string += ", " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	string += "<br>";
+
+	write(string);
 }
 
 this.cowsay = function(argc, argv)
