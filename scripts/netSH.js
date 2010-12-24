@@ -220,19 +220,23 @@ function netSH(obj_name, base_element)
 	function initModules()
 	{
 		var modules_xml = loadXML(netSH_prefix + "config/modules.xml");
+		var msg = document.createElement("a");
+
+		msg.setAttribute("class", "text");
+		base_element.appendChild(msg);
 
 		for(i = 0; i < modules_xml.getElementsByTagName('Module').length; i++)
 		{
 			var file = "";
 			var name = modules_xml.getElementsByTagName('Module')[i].getAttribute('name');
 
-			base_element.innerHTML = "<a class=text>Loading module \'" + name + "\'...</a>";
+			msg.innerHTML = "Loading module \'" + name + "\'...";
 
 			file = loadFILE(netSH_prefix + modules_xml.getElementsByTagName('Module')[i].getAttribute('src'));
 			addModule(name, file);
 		}
 
-		base_element.innerHTML = "";
+		base_element.removeChild(msg);
 	}
 
 	function initStyles()
