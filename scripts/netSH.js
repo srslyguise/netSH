@@ -112,7 +112,6 @@ function netSH(obj_name, base_element)
 			else
 				pre_.setAttribute('class', "file_content");
 
-			pre_.style.cssText = base_element.style.cssText;
 			pre_.style.backgroundColor = "transparent";
 			base_element.appendChild(pre_);
 
