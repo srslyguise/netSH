@@ -4,11 +4,12 @@ this.name = null;
 var object;
 var style = "modules/syntaxhighlighter/styles/shEdx.css";
 
-var languages = {
-	"c":"modules/syntaxhighlighter/languages/shBrushCpp.js",
-	"perl":"modules/syntaxhighlighter/languages/shBrushPerl.js",
-	"cpp":"modules/syntaxhighlighter/languages/shBrushCpp.js"
-}
+var languages = new Array(
+		new Array("bash", "modules/syntaxhighlighter/languages/shBrushBash.js"),
+		new Array("c", "modules/syntaxhighlighter/languages/shBrushCpp.js"),
+		new Array("cpp", "modules/syntaxhighlighter/languages/shBrushCpp.js"),
+		new Array("perl", "modules/syntaxhighlighter/languages/shBrushPerl.js")
+);
 
 this.init = function(obj)
 {
@@ -16,6 +17,9 @@ this.init = function(obj)
 	addScript(netSH_prefix + "modules/syntaxhighlighter/shCore.js");
 	addStyle(netSH_prefix + "modules/syntaxhighlighter/styles/shCore.css");
 	addStyle(netSH_prefix + style);
+
+	for(var i = 0; i < languages.length; i++)
+		addScript(netSH_prefix + languages[i][1]);
 }
 
 this.highlight = function(lang)
@@ -23,11 +27,14 @@ this.highlight = function(lang)
 	var current_module = null;
 	var ready = false; 
 
-	if(languages[lang] == undefined)
-		return null;
-
-	if(addScript(netSH_prefix + languages[lang]) == 1)
-		setTimeout("var elem = document.getElementById(\"toHighlight\"); SyntaxHighlighter.highlight(elem); elem = document.getElementById(\"toHighlight\"); elem.setAttribute(\"id\", \"\");", 700);
+	for(var i = 0; i < languages.length; i++)
+		if(languages[i][0] == lang)
+		{
+			var elem = document.getElementById("toHighlight");
+			SyntaxHighlighter.highlight(elem);
+			elem = document.getElementById("toHighlight");
+			elem.setAttribute("id", "");
+		}
 
 	return;
 }
