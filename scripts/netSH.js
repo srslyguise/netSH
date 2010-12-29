@@ -162,15 +162,26 @@ function netSH(obj_name, base_element)
 	function addStyle(src)
 	{
 		var style = document.createElement('link');
+		var href = "";
 
 		style.rel = "stylesheet";
 		style.type = "text/css";
 		style.href = src;
 
-		for(var i = 0; i < document.getElementsByTagName('head').length; i++)
-			if(document.getElementsByTagName('head')[i].tagName == "link")
-				if(document.getElementsByTagName('head')[i].getAttribute("href") == src)
-					return null;
+		for(var i = 0; i < document.getElementsByTagName('head')[0].childNodes.length; i++)
+		{
+			try
+			{
+				href = document.getElementsByTagName('head')[0].childNodes[i].getAttribute("href");
+			}
+			catch(e)
+			{
+				href = "";
+			}
+
+			if(href == src)
+				return null;
+		}
 
 		document.getElementsByTagName('head')[0].appendChild(style);
 		return 1;
@@ -184,14 +195,25 @@ function netSH(obj_name, base_element)
 	function addScript(src)
 	{
 		var script = document.createElement('script');
+		var att_src = "";
 
 		script.type = "text/javascript";
 		script.src = src;
 
-		for(var i = 0; i < document.getElementsByTagName('head').length; i++)
-			if(document.getElementsByTagName('head')[i].tagName == "script")
-				if(document.getElementsByTagName('head')[i].getAttribute("src") == src)
-					return null;
+		for(var i = 0; i < document.getElementsByTagName('head')[0].childNodes.length; i++)
+		{
+			try
+			{
+				att_src = document.getElementsByTagName('head')[0].childNodes[i].getAttribute("src");
+			}
+			catch(e)
+			{
+				att_src = "";
+			}
+
+			if(att_src == src)
+				return null;
+		}
 
 		document.getElementsByTagName('head')[0].appendChild(script);
 		return 1;
