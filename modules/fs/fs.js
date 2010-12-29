@@ -25,19 +25,28 @@ this.getCurrentPath = function()
 
 this.cd = function(argc, argv)
 {
+	var tmp_path = current;
+	var res;
+
 	if(argc < 2)
 	{
 		write("Usage: " + argv[0] + " &lt;path&gt;<br>");
 		return;
 	}
 
-	if(Cd(argv[1]) == 2)
+	if((res = Cd(tmp_path, argv[1])) == 2)
 	{
 		write("cd: " + argv[1] + ": Path not found<br>");
 	}
+	else if(res == 1)
+	{}
+	else
+		current = res;
+
+	setPrompt(getUser() + ":" + getFullPath(current) + " " + getPrivilege() + "_");
 }
 
-function Cd(path)
+function Cd(tmp_path, path)
 {
 	var tmp = "";
 	var found = false;
@@ -47,29 +56,31 @@ function Cd(path)
 
 	tmp += path;
 
-	//alert(tmp);
-
 	while(tmp != null)
 	{
-		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
-		//alert("length --> " + current.subdirs.length);
-
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == ".")
 			found = true;
 
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == "..")
 		{
-			if(current.prev != null)
-				current = current.prev;
+			if(tmp_path.prev != null)
+				tmp_path = tmp_path.prev;
 			
 			found = true;
 		}
 
-		for(var i = 0; (i < current.subdirs.length) && (found != true); i++)
-			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == current.subdirs[i].Name)
+		for(var i = 0; (i < tmp_path.subdirs.length) && (found != true); i++)
+			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.subdirs[i].Name)
 			{
 				found = true;
-				current = current.subdirs[i];
+				tmp_path = tmp_path.subdirs[i];
+			}
+
+		for(var i = 0; (i < tmp_path.links.length) && (found != true); i++)
+			if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == tmp_path.links[i].Name)
+			{
+				window.open(tmp_path.links[i].Href);
+				return 1;
 			}
 
 		if(found == false)
@@ -78,14 +89,14 @@ function Cd(path)
 		try
 		{
 			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
+			var res;
 
-			if(Cd(tmp) == 2)
-			{
-				write("cd: " + path + ": Path not found<br>");
-				setPrompt(getUser() + ":" + getFullPath(current) + " " + getPrivilege() + "_");
-			}
+			if((res = Cd(tmp_path, tmp)) == 2)
+				return 2;
+			else
+				tmp_path = res;
 
-			return;
+			return tmp_path;
 		}
 		catch(e)
 		{
@@ -93,9 +104,7 @@ function Cd(path)
 		}
 	}
 
-	setPrompt(getUser() + ":" + getFullPath(current) + " " + getPrivilege() + "_");
-
-	return;
+	return tmp_path;
 }
 
 this.ls = function(argc, argv)
@@ -121,16 +130,11 @@ function Ls(tmp_path, path)
 
 	tmp += path;
 
-	//alert(tmp);
-
 	if(tmp == "/")
 		showPath(tmp_path);
 
 	while(tmp != null)
-	{
-		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
-		//alert("length --> " + tmp_path.subdirs.length);
-		
+	{	
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == ".")
 			found = true;
 
@@ -150,10 +154,7 @@ function Ls(tmp_path, path)
 			}
 
 		if(found == false)
-		{
-			//write("ls: " + path + ": Path not found<br>")
 			return 2;
-		}
 
 		try
 		{
@@ -189,13 +190,8 @@ function GetFile(tmp_path, path)
 
 	tmp += path;
 
-	//alert(tmp);
-
 	while(tmp != null)
 	{
-		//alert(tmp.match(/[^\/]?[\w\.]+[^\/]?/));
-		//alert("length --> " + tmp_path.subdirs.length);
-
 		if(tmp.match(/[^\/]?[\w\n\.]+[^\/]?/) == ".")
 			found = true;
 
@@ -219,15 +215,13 @@ function GetFile(tmp_path, path)
 			}
 
 		if(found == false)
-		{
 			return 2;
-		}
+
 		try
 		{
 			tmp = tmp.match(/[^\/]+([\/]+[\w\n\.]+[\/]?.*)/)[1];
 
 			var ret = GetFile(tmp_path, tmp);
-			//alert(ret);
 
 			if(ret == 2)
 				return null;
