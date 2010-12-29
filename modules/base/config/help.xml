@@ -24,8 +24,8 @@
 	</Cmd>
 
 	<Cmd name="cd">
-		<Parameters><![CDATA[&lt;dirname&gt;]]></Parameters>
-		<Description><![CDATA[Change working directory]]></Description>
+		<Parameters><![CDATA[&lt;dirname|link&gt;]]></Parameters>
+		<Description><![CDATA[Change working directory or open link]]></Description>
 	</Cmd>
 
 	<Cmd name="clear">

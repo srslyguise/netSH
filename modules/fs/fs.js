@@ -30,7 +30,7 @@ this.cd = function(argc, argv)
 
 	if(argc < 2)
 	{
-		write("Usage: " + argv[0] + " &lt;path&gt;<br>");
+		write("Usage: " + argv[0] + " &lt;path|link&gt;<br>");
 		return;
 	}
 
