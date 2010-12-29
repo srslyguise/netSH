@@ -2,18 +2,19 @@ this.functionList = new Array();
 this.name = null;
 
 var object;
-var style = "modules/syntaxhighlighter/styles/sh_typical.css";
+var style = "modules/syntaxhighlighter/styles/shEdx.css";
 
 var languages = {
-	"c":"modules/syntaxhighlighter/languages/sh_c.js",
-	"perl":"modules/syntaxhighlighter/languages/sh_perl.js",
-	"cpp":"modules/syntaxhighlighter/languages/sh_cpp.js"
+	"c":"modules/syntaxhighlighter/languages/shBrushCpp.js",
+	"perl":"modules/syntaxhighlighter/languages/shBrushPerl.js",
+	"cpp":"modules/syntaxhighlighter/languages/shBrushCpp.js"
 }
 
 this.init = function(obj)
 {
 	object = obj;
-	addScript(netSH_prefix + "modules/syntaxhighlighter/sh_main.js");
+	addScript(netSH_prefix + "modules/syntaxhighlighter/shCore.js");
+	addStyle(netSH_prefix + "modules/syntaxhighlighter/styles/shCore.css");
 	addStyle(netSH_prefix + style);
 }
 
@@ -26,7 +27,7 @@ this.highlight = function(lang)
 		return null;
 
 	if(addScript(netSH_prefix + languages[lang]) == 1)
-		setTimeout("sh_highlightDocument();", 700);
+		setTimeout("var elem = document.getElementById(\"toHighlight\"); SyntaxHighlighter.highlight(elem); elem = document.getElementById(\"toHighlight\"); elem.setAttribute(\"id\", \"\");", 700);
 
 	return;
 }
