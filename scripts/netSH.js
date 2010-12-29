@@ -103,12 +103,14 @@ function netSH(obj_name, base_element)
 		var sh_module = null;
 		var pre_ = document.createElement('pre');
 
+		pre_.setAttribute('id', "toHighlight");
+
 		if((sh_module = GetModuleByName("sh")) != null)
 		{
 			pre_.innerHTML = file;
 
 			if(lang != null)
-				pre_.setAttribute('class', "sh_" + lang);
+				pre_.setAttribute('class', "brush: " + lang);
 			else
 				pre_.setAttribute('class', "file_content");
 
