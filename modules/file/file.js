@@ -29,18 +29,23 @@ this.cat = function(argc, argv)
 		write("cat: " + argv[1] + ": File not found<br>");
 	else
 	{
-		file = loadFILE(netSH_prefix + src.Src);
-
-		if(file == null)
+		if(getModuleByName("sh") == null)
 		{
-			write("cat: " + argv[1] + ": Can't load file<br>");
-			return;
+			file = loadFILE(netSH_prefix + src.Src);
+
+			if(file == null)
+			{
+				write("cat: " + argv[1] + ": Can't load file<br>");
+				return;
+			}
+
+			file = file.replace(/</g, "&lt;");
+			file = file.replace(/>/g, "&gt;");
+
+			write("<pre class=file_content>" + file + "</pre>");
 		}
-
-		file = file.replace(/</g, "&lt;");
-		file = file.replace(/>/g, "&gt;");
-
-		writeFile(file, src.Lang);
+		else
+			getModuleByName("sh").highlight(src.Src, src.Lang);
 	}
 }
 
@@ -67,4 +72,9 @@ function writeFile(file, lang)
 function addStyle(file)
 {
 	eval(object + '.addStyle_pub(file);');
+}
+
+function getModuleByName(name)
+{
+	return eval(object + '.getModuleByName(name);');
 }
