@@ -98,31 +98,6 @@ function netSH(obj_name, base_element)
 		Write(text);
 	}
 
-	this.writeFile = function(file, lang)
-	{
-		var sh_module = null;
-		var pre_ = document.createElement('pre');
-
-		pre_.setAttribute('id', "toHighlight");
-
-		if((sh_module = GetModuleByName("sh")) != null)
-		{
-			pre_.innerHTML = file;
-
-			if(lang != null)
-				pre_.setAttribute('class', "brush: " + lang);
-			else
-				pre_.setAttribute('class', "file_content");
-
-			pre_.style.backgroundColor = "transparent";
-			base_element.appendChild(pre_);
-
-			sh_module.highlight(lang);
-		}
-		else
-			base_element.innerHTML += "<pre class=text>" + file + "</pre>";
-	}
-
 	function loadXML(file)
 	{
 		var request = new XMLHttpRequest();
