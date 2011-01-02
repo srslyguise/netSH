@@ -24,13 +24,13 @@
 
 <Fs>
 	<Directory name="test">
-		<File name="lol" src="lmao"/>
 		<Link name="bugabuga" href="http://bugabuga.com"/>
 	</Directory>
 
 	<Directory name="test2">
 		<Directory name="subtest2">
 			<File name="testfile.c" src="res/testfile.c" lang="c"/>
+			<File name="testfile" src="res/testfile"/>
 		</Directory>
 	</Directory>
 </Fs>
