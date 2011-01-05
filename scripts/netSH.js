@@ -8,12 +8,6 @@ function netSH(obj_name, base_element)
 
 	this.init = function()
 	{
-		if((navigator.appName == "Microsoft Internet Explorer") && !(navigator.appVersion.match(/MSIE 9/)))
-		{
-			alert("Current version of IE is not supported, upgrade to IE9");
-			return;
-		}
-
 		prompt_ = document.createElement("a");
 		input = document.createElement("input");
 		modules = new Array();
@@ -40,6 +34,29 @@ function netSH(obj_name, base_element)
 			base_element.removeChild(input);
 			base_element.innerHTML += "<a class=\"text\">" + input.value + "</a><br>";
 			parse(input.value);
+
+			if((navigator.appName == "Microsoft Internet Explorer") && !(navigator.appVersion.match(/MSIE 9/)))
+                        {
+                                var user = "";
+                                var privilege = "";
+                                var path = "";
+        
+                                if(GetModuleByName("base") != null)
+                                {
+                                        user = GetModuleByName("base").getUser();
+                                        privilege = GetModuleByName("base").getPrivilege();
+                                }
+                
+                                if(GetModuleByName("fs") != null)
+                                        path = GetModuleByName("fs").getCurrentPath();
+        
+                                prompt_.innerHTML = (user != "") ? user : "netSH";
+                                prompt_.innerHTML += ":";
+                                prompt_.innerHTML += path;
+                                prompt_.innerHTML += " ";
+                                prompt_.innerHTML += (privilege != "") ? privilege : "";
+                                prompt_.innerHTML += "_";
+                        }
 
 			base_element.appendChild(prompt_);
 			input.value = "";
