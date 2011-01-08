@@ -11,6 +11,7 @@ this.init = function(obj)
 
 this.highlight = function(file, lang)
 {
+	write("Loading...<br>");
 	write("<pre class=sh>" + loadFILE(netSH_prefix + 'modules/syntaxhighlighter/sh.php?file=' + file + '&lang=' + lang) + "</pre>");
 	return;
 }
