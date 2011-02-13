@@ -32,6 +32,8 @@ function netSH(obj_name, base_element)
 		if((kc == 13) && (input.value != ""))
 		{
 			base_element.removeChild(input);
+			input.value = input.value.replace(/</g, "&lt;");
+			input.value = input.value.replace(/>/g, "&gt;");
 			base_element.innerHTML += "<a class=\"text\">" + input.value + "</a><br>";
 			parse(input.value);
 
